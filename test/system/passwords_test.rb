@@ -1,8 +1,14 @@
+# frozen_string_literal: true
+
 require "application_system_test_case"
 
 class PasswordsTest < ApplicationSystemTestCase
   setup do
-    @user = sign_in_as(users(:lazaro_nixon))
+    @user = sign_in_as(create(:user))
+    find_by_id("user-menu-button").click
+    click_on "Settings"
+
+    assert_text "Settings"
   end
 
   test "updating the password" do

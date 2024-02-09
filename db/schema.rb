@@ -10,7 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_09_171755) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_09_181754) do
+  create_table "boards", force: :cascade do |t|
+    t.integer "workspace_id", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["workspace_id"], name: "index_boards_on_workspace_id"
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.integer "position"
+    t.integer "list_id", null: false
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["list_id"], name: "index_cards_on_list_id"
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.integer "board_id", null: false
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_lists_on_board_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "user_agent"
@@ -21,6 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_171755) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "name", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
     t.boolean "verified", default: false, null: false
@@ -29,5 +56,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_171755) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "users_workspaces", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "workspace_id", null: false
+    t.index ["user_id", "workspace_id"], name: "index_users_workspaces_on_user_id_and_workspace_id"
+    t.index ["workspace_id", "user_id"], name: "index_users_workspaces_on_workspace_id_and_user_id"
+  end
+
+  create_table "workspaces", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "boards", "workspaces"
+  add_foreign_key "cards", "lists"
+  add_foreign_key "lists", "boards"
   add_foreign_key "sessions", "users"
 end

@@ -1,6 +1,4 @@
-<h1>Sign up</h1>
-
-<%= form_with(url: sign_up_path) do |form| %>
+<div class="flex justify-center">
   <% if @user.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -12,24 +10,30 @@
       </ul>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.email_field :email, value: @user.email, required: true, autofocus: true, autocomplete: "email" %>
+  <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <%= form_with(model: @user, url: sign_up_path, class: "space-y-6") do |form| %>
+      <h5 class="text-xl font-bold text-gray-900 dark:text-white">Register for a new account</h5>
+      <div>
+        <%= form.label :name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.text_field :name, value: @user.name, required: true, autofocus: true, autocomplete: "name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "John Doe" %>
+      </div>
+      <div class="mb-6">
+        <%= form.label :email, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.email_field :email, value: @user.email, required: true, autofocus: true, autocomplete: "email", class: "bg-gray-500 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "john.doe@company.com" %>
+      </div> 
+      <div class="mb-6">
+        <%= form.label :password, "Password", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= form.password_field :password, required: true, autocomplete: "new-password", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "•••••••••" %>
+        <div class="text-sm">12 characters minimum.</div>
+      </div> 
+      <div class="mb-6">
+        <%= form.label :password_confirmation, "Confirm password", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white", required: true %>
+        <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "•••••••••" %>
+      </div>
+      <%= form.submit "Sign Up", class: "w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+    <% end %>
+    <div class="text-sm font-medium text-gray-500 dark:text-gray-300 text-center py-3">
+      Already have an account? <%= link_to "Sign In", sign_in_path, class: "text-blue-700 hover:underline dark:text-blue-500" %>
+    </div>
   </div>
-
-  <div>
-    <%= form.label :password, style: "display: block" %>
-    <%= form.password_field :password, required: true, autocomplete: "new-password" %>
-    <div>12 characters minimum.</div>
-  </div>
-
-  <div>
-    <%= form.label :password_confirmation, style: "display: block" %>
-    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
-  </div>
-
-  <div>
-    <%= form.submit "Sign up" %>
-  </div>
-<% end %>
+</div>
