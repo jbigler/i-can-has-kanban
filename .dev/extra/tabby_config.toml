@@ -1,0 +1,3 @@
+[[repositories]]
+name = "rails"
+git_url = "file:///git/rails"

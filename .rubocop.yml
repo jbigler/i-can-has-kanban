@@ -1,0 +1,13 @@
+require:
+  - rubocop-rails
+  - rubocop-minitest
+  - rubocop-capybara
+  - rubocop-factory_bot
+
+AllCops:
+  NewCops: enable
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Metrics/MethodLength:
+  Max: 20
