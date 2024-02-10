@@ -220,6 +220,8 @@ GEM
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    pry-rails (0.3.9)
+      pry (>= 0.10.4)
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
@@ -400,6 +402,7 @@ DEPENDENCIES
   jbuilder
   litestack
   minitest-reporters
+  pry-rails
   puma (>= 5.0)
   rails (~> 7.1.3)
   rails_live_reload
