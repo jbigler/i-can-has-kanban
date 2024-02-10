@@ -20,7 +20,6 @@ class CardsTest < ApplicationSystemTestCase
     click_on "New card"
 
     fill_in "Description", with: @card.description
-    fill_in "Position", with: @card.position
     fill_in "Title", with: @card.title
     click_on "Create Card"
 
@@ -33,7 +32,6 @@ class CardsTest < ApplicationSystemTestCase
     click_on "Edit this card", match: :first
 
     fill_in "Description", with: @card.description
-    fill_in "Position", with: @card.position
     fill_in "Title", with: @card.title
     click_on "Update Card"
 

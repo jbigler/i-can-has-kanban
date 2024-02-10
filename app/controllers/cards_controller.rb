@@ -4,7 +4,7 @@ class CardsController < ApplicationController
 
   # GET /cards or /cards.json
   def index
-    @cards = @list.cards.all
+    @cards = @list.cards
   end
 
   # GET /cards/1 or /cards/1.json
@@ -70,6 +70,6 @@ class CardsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def card_params
-    params.require(:card).permit(:position, :list_id, :title, :description)
+    params.require(:card).permit(:row_order, :title, :description)
   end
 end

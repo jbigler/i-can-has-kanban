@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_181754) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.integer "position"
+    t.integer "row_order"
     t.integer "list_id", null: false
     t.string "title"
     t.text "description"
