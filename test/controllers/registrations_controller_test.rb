@@ -16,7 +16,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
                              password_confirmation: "Secret1*3*5*", account_attributes: { name: "Test Account" } } }
     end
 
-    assert_redirected_to root_url
+    assert_redirected_to workspaces_url
   end
 
   test "invalid user information should reload signup form" do
