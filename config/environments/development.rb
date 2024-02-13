@@ -79,6 +79,8 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "debug")
+
   # Allow web console to run in Docker
   config.web_console.allowed_ips = Socket.ip_address_list.reduce([]) do |res, addrinfo|
     addrinfo.ipv4? ? res << IPAddr.new(addrinfo.ip_address).mask(24) : res

@@ -4,7 +4,7 @@ class CardsController < ApplicationController
 
   # GET /cards or /cards.json
   def index
-    @cards = @list.cards
+    @cards = @list.cards.rank(:row_order)
   end
 
   # GET /cards/1 or /cards/1.json
@@ -38,6 +38,7 @@ class CardsController < ApplicationController
     respond_to do |format|
       if @card.update(card_params)
         format.html { redirect_to card_url(@card), notice: "Card was successfully updated." }
+        # format.json { render :show, status: :ok, location: @card }
         format.json { render :show, status: :ok, location: @card }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -70,6 +71,6 @@ class CardsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def card_params
-    params.require(:card).permit(:row_order, :title, :description)
+    params.require(:card).permit(:row_order_position, :list_id, :title, :description)
   end
 end

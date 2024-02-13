@@ -7,7 +7,7 @@ class ListsController < ApplicationController
 
   # GET /lists or /lists.json
   def index
-    @lists = @board.lists
+    @lists = @board.lists.rank(:row_order)
   end
 
   # GET /lists/1 or /lists/1.json
@@ -60,6 +60,8 @@ class ListsController < ApplicationController
     end
   end
 
+  def update_position; end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -73,6 +75,6 @@ class ListsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def list_params
-    params.require(:list).permit(:board_id, :title)
+    params.require(:list).permit(:board_id, :title, :row_order_position)
   end
 end
