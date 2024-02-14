@@ -40,15 +40,15 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     get root_url
   end
 
-  test "should sign out" do
+  test "should go to root after sign out" do
     sign_in_as @user
 
     delete session_url(@user.sessions.last)
 
-    assert_redirected_to sessions_url
+    assert_redirected_to root_url
 
-    follow_redirect!
+    get root_url
 
-    assert_redirected_to sign_in_url
+    assert_response :success
   end
 end
