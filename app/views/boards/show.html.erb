@@ -1,36 +1,46 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-    <p class="my-5"> <strong>Board:</strong> <%= @board.name %> </p>
-
-    <div class="flex flex-row gap-7"
-         data-controller="sortable"
-         data-sortable-type-value="list">
-      <% @board.lists.rank(:row_order).each do |list| %>
-        <div id="<%= dom_id list %>" class="list" data-sortable-update-url="<%= list_path(list) %>">
-          <p> <%= list.title %></p>
-          <ul data-controller="sortable"
-              data-sortable-list-id="<%= list.id %>"
-              data-sortable-group-value="cards"
-              data-sortable-type-value="card">
-              <% list.cards.rank(:row_order).each do |card| %>
-                <li id="<%= dom_id card %>" class="card"
-                                            data-sortable-update-url="<%= card_path(card) %>">
-                                            <p><%= card.title %></p>
-                                            <p>card id: <%= card.id %></p>
-                </li>
-              <% end %>
-          </ul>
-        </div>
-      <% end %>
-    </div>
-
-    <%= link_to"Edit this board", edit_board_path(@board), class:"mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to"Destroy this board", board_path(@board), method: :delete, class:"mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
-    </div>
-    <%= link_to"Back to boards", workspace_boards_path(@board.workspace), class:"ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+<div class="h-full max-h-full flex flex-col overflow-hidden">
+  <div class="self-center flex flex-row">
+    <p class="text-2xl font-bold dark:text-white pb-2"> <%= @board.name %> </p>
+    <%= link_to"Edit this board", edit_board_path(@board), class: "mt-2 rounded-lg px-3 bg-gray-100 inline-block font-medium m-2" %>
+    <%= link_to"Back to boards", workspace_boards_path(@board.workspace), class: "mt-2 rounded-lg px-3 bg-gray-100 inline-block font-medium m-2" %>
   </div>
+
+  <div class="flex-grow max-h-full flex flex-row bg-gray-400 overflow-x-scroll"
+       data-controller="sortable"
+       data-sortable-type-value="list">
+
+    <% @board.lists.rank(:row_order).each do |list| %>
+
+      <div id="<%= dom_id list %>" data-sortable-update-url="<%= list_path(list) %>" class="min-w-72 p-3 m-2 bg-gray-200
+                                  border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700
+                                  flex flex-col ">
+
+                                  <p class="font-bold dark:text-white text-center"> <%= list.title %></p>
+
+                                  <ul data-controller="sortable"
+                                      data-sortable-list-id="<%= list.id %>"
+                                      data-sortable-group-value="cards"
+                                      data-sortable-type-value="card"
+                                      class="list full flex-grow overflow-y-scroll">
+
+                                      <% list.cards.rank(:row_order).each do |card| %>
+
+                                        <li id="<%= dom_id card %>" class="block shadow-gray-500 max-w-sm p-3 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 "
+                                                                    data-sortable-update-url="<%= card_path(card) %>">
+
+                                                                    <p class=" font-normal text-gray-700 dark:text-gray-400 "><%= card.title %></p>
+
+                                        </li>
+                                      <% end %>
+                                  </ul>
+                                  <a class="font-bold dark:text-white text-center" href="<%= new_list_card_path(list) %>">Add card</a>
+      </div>
+    <% end %>
+    <div id="new-list" class="overflow-y-auto overflow-x-clip list
+                              min-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
+
+      <a href="<%= new_board_list_path(@board) %>" class="font-bold dark:text-white text-center"> + Add New List</a>
+    </div>
+  </div>
+
 </div>
