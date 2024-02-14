@@ -17,3 +17,9 @@
   /* Safari and Chrome */
   display: none;
 }
+
+.inline-edit {
+  .inline-action {
+    display: initial;
+  }
+}
