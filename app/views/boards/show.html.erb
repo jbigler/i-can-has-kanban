@@ -2,7 +2,7 @@
   <div class="self-center flex flex-row">
     <p class="text-2xl font-bold dark:text-white pb-2"> <%= @board.name %> </p>
     <%= link_to"Edit this board", edit_board_path(@board), class: "mt-2 rounded-lg px-3 bg-gray-100 inline-block font-medium m-2" %>
-    <%= link_to"Back to boards", workspace_boards_path(@board.workspace), class: "mt-2 rounded-lg px-3 bg-gray-100 inline-block font-medium m-2" %>
+    <%= link_to"Back to boards", workspace_path(@board.workspace), class: "mt-2 rounded-lg px-3 bg-gray-100 inline-block font-medium m-2" %>
   </div>
 
   <div class="flex-grow max-h-full flex flex-row bg-gray-400 overflow-x-scroll"
@@ -11,33 +11,37 @@
 
     <% @board.lists.rank(:row_order).each do |list| %>
 
-      <div id="<%= dom_id list %>" data-sortable-update-url="<%= list_path(list) %>" class="min-w-72 p-3 m-2 bg-gray-200
-                                  border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700
-                                  flex flex-col ">
+      <div id="<%= dom_id list %>"
+           data-sortable-update-url="<%= list_path(list) %>"
+           class="min-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex flex-col ">
 
-                                  <p class="font-bold dark:text-white text-center"> <%= list.title %></p>
+           <p class="font-bold dark:text-white text-center"> <%= list.title %></p>
 
-                                  <ul data-controller="sortable"
-                                      data-sortable-list-id="<%= list.id %>"
-                                      data-sortable-group-value="cards"
-                                      data-sortable-type-value="card"
-                                      class="list full flex-grow overflow-y-scroll">
+           <ul data-controller="sortable"
+               data-sortable-list-id="<%= list.id %>"
+               data-sortable-group-value="cards"
+               data-sortable-type-value="card"
+               class="list full flex-grow overflow-y-scroll">
 
-                                      <% list.cards.rank(:row_order).each do |card| %>
+               <% list.cards.rank(:row_order).each do |card| %>
 
-                                        <li id="<%= dom_id card %>" class="block shadow-gray-500 max-w-sm p-3 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 "
-                                                                    data-sortable-update-url="<%= card_path(card) %>">
+                 <li id="<%= dom_id card %>"
+                     class="block shadow-gray-500 max-w-sm p-3 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 "
+                     data-sortable-update-url="<%= card_path(card) %>">
 
-                                                                    <p class=" font-normal text-gray-700 dark:text-gray-400 "><%= card.title %></p>
+                     <a href="<%= edit_card_path(card) %>" class="float-right">
+                       <svg class="w-5 h-5" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="edit" role="img" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="m3.99 16.854-1.314 3.504a.75.75 0 0 0 .966.965l3.503-1.314a3 3 0 0 0 1.068-.687L18.36 9.175s-.354-1.061-1.414-2.122c-1.06-1.06-2.122-1.414-2.122-1.414L4.677 15.786a3 3 0 0 0-.687 1.068zm12.249-12.63 1.383-1.383c.248-.248.579-.406.925-.348.487.08 1.232.322 1.934 1.025.703.703.945 1.447 1.025 1.934.058.346-.1.677-.348.925L19.774 7.76s-.353-1.06-1.414-2.12c-1.06-1.062-2.121-1.415-2.121-1.415z" fill="currentColor"></path></g></svg>
+                     </a>
+                     <p class=" font-normal text-gray-700 dark:text-gray-400 "><%= card.title %></p>
 
-                                        </li>
-                                      <% end %>
-                                  </ul>
-                                  <a class="font-bold dark:text-white text-center" href="<%= new_list_card_path(list) %>">Add card</a>
+                 </li>
+               <% end %>
+           </ul>
+           <a class="font-bold dark:text-white text-center" href="<%= new_list_card_path(list) %>">Add card</a>
       </div>
     <% end %>
     <div id="new-list" class="overflow-y-auto overflow-x-clip list
-                              min-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              min-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
 
       <a href="<%= new_board_list_path(@board) %>" class="font-bold dark:text-white text-center"> + Add New List</a>
     </div>
