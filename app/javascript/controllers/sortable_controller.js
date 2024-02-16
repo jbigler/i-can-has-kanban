@@ -21,10 +21,6 @@ export default class extends Controller {
     var newIndex = event.newIndex
     var sortableListId = event.to.dataset.sortableListId
     var itemType = event.to.dataset.sortableTypeValue
-    console.log(event.to.dataset)
-    console.log(sortableUpdateUrl)
-    console.log(newIndex)
-    console.log(sortableListId)
     patch(sortableUpdateUrl, {
       body: JSON.stringify({ [itemType]: { row_order_position: newIndex, list_id: sortableListId } }), responseKind: "json"
     })

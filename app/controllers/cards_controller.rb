@@ -24,6 +24,10 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       if @card.save
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append("cards_for_" << helpers.dom_id(@list), partial: "card",
+                                                                                          locals: { card: @card })
+        end
         format.html { redirect_to card_url(@card), notice: "Card was successfully created." }
         format.json { render :show, status: :created, location: @card }
       else
@@ -37,6 +41,9 @@ class CardsController < ApplicationController
   def update
     respond_to do |format|
       if @card.update(card_params)
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(helpers.dom_id(@card), partial: "card", locals: { card: @card })
+        end
         format.html { redirect_to card_url(@card), notice: "Card was successfully updated." }
         # format.json { render :show, status: :ok, location: @card }
         format.json { render :show, status: :ok, location: @card }
@@ -53,6 +60,9 @@ class CardsController < ApplicationController
     @card.destroy!
 
     respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(helpers.dom_id(@card))
+      end
       format.html { redirect_to list_cards_url(list), notice: "Card was successfully destroyed." }
       format.json { head :no_content }
     end
