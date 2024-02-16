@@ -55,3 +55,10 @@ Guard::Minitest::Runner.module_eval do
     run(paths, all: true)
   end
 end
+
+guard :brakeman, run_on_start: true do
+  watch(%r{^app/.+\.(erb|haml|rhtml|rb)$})
+  watch(%r{^config/.+\.rb$})
+  watch(%r{^lib/.+\.rb$})
+  watch('Gemfile')
+end

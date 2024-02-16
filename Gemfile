@@ -65,16 +65,18 @@ group :development do
   gem "pry-rails"
   gem "web-console"
 
-  gem "guard"
-  gem "guard-minitest"
-
+  gem "brakeman"
   gem "rails_live_reload"
+
   gem "rubocop"
   gem "rubocop-capybara"
   gem "rubocop-factory_bot"
   gem "rubocop-minitest"
   gem "rubocop-rails"
 
+  gem "guard"
+  gem "guard-brakeman"
+  gem "guard-minitest"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
