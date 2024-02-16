@@ -38,8 +38,10 @@ class BoardsTest < ApplicationSystemTestCase
   end
 
   test "should destroy Board" do
-    visit board_url(@board)
-    click_on "Destroy this board", match: :first
+    visit workspace_url(@workspace)
+    accept_alert do
+      click_on "Delete", match: :first
+    end
 
     assert_text "Board was successfully destroyed"
   end

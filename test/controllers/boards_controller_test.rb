@@ -26,7 +26,7 @@ class BoardsControllerTest < ActionDispatch::IntegrationTest
       post workspace_boards_url(@workspace), params: { board: { name: @board.name, workspace_id: @board.workspace_id } }
     end
 
-    assert_redirected_to board_url(Board.last)
+    assert_redirected_to workspace_url(@workspace)
   end
 
   test "should show board" do
@@ -53,6 +53,6 @@ class BoardsControllerTest < ActionDispatch::IntegrationTest
       delete board_url(@board)
     end
 
-    assert_redirected_to workspace_boards_url(@workspace)
+    assert_redirected_to workspace_url(@workspace)
   end
 end

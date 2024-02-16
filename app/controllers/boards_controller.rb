@@ -24,7 +24,7 @@ class BoardsController < ApplicationController
 
     respond_to do |format|
       if @board.save
-        format.html { redirect_to board_url(@board), notice: "Board was successfully created." }
+        format.html { redirect_to workspace_url(@workspace), notice: "Board was successfully created." }
         format.json { render :show, status: :created, location: @board }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class BoardsController < ApplicationController
     @board.destroy!
 
     respond_to do |format|
-      format.html { redirect_to workspace_boards_url(workspace), notice: "Board was successfully destroyed." }
+      format.html { redirect_to workspace_url(workspace), notice: "Board was successfully destroyed." }
       format.json { head :no_content }
     end
   end
