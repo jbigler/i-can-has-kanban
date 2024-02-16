@@ -2,7 +2,7 @@
   <h1 class="font-bold text-4xl">Editing card</h1>
 
   <%= turbo_frame_tag "modal" do %>
-    <div tabindex="-1" class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" data-controller="turbo-modal" data-turbo-modal-target="modal" data-action="turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground" >
+    <div tabindex="-1" class="bg-sky-800/50 flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" data-controller="turbo-modal" data-turbo-modal-target="modal" data-action="turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground" >
       <%= form_with model: @card, class: "contents", id: 'modal-form' do |form| %>
         <%= render "modal", form:, card: @card %>
       <% end %>

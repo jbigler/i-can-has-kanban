@@ -7,41 +7,43 @@ class ListsTest < ApplicationSystemTestCase
     @user = sign_in_as(create(:user_with_workspaces))
     @workspace = @user.workspaces.first
     @board = @workspace.boards.create(name: "Test Board")
-    @list = @board.lists.create(title: "First list")
+    @list = @board.lists.create(title: "First List")
   end
 
-  test "visiting the index" do
-    visit board_lists_url(@board)
+  test "visiting boards#show" do
+    visit board_url(@board)
 
-    assert_selector "h1", text: "Lists"
+    assert_selector "a#label_#{dom_id @list}", text: @list.title
   end
 
   test "should create list" do
-    visit board_lists_url(@board)
-    click_on "New list"
+    visit board_url(@board)
+    click_on "+ Add New List"
 
-    fill_in "Title", with: @list.title
-    click_on "Create List"
+    fill_in "Title", with: "Unique List Name"
+    click_on "Save"
 
-    assert_text "List was successfully created"
-    click_on "Back"
+    assert_text "Unique List Name"
   end
 
   test "should update List" do
-    visit list_url(@list)
-    click_on "Edit this list", match: :first
+    visit board_url(@board)
+    click_on "First List", match: :first
 
-    fill_in "Title", with: @list.title
-    click_on "Update List"
+    fill_in "Title", with: "New Unique Title"
+    click_on "Save"
 
-    assert_text "List was successfully updated"
-    click_on "Back"
+    assert_text "New Unique Title"
   end
 
   test "should destroy List" do
-    visit list_url(@list)
-    click_on "Destroy this list", match: :first
+    visit board_url(@board)
+    click_on "First List", match: :first
 
-    assert_text "List was successfully destroyed"
+    accept_alert do
+      click_on "Delete", match: :first
+    end
+
+    refute_text "First List"
   end
 end

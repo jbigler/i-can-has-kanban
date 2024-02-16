@@ -10,12 +10,6 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
     @list = @board.lists.create(title: "First list")
   end
 
-  test "should get index" do
-    get board_lists_url(@board)
-
-    assert_response :success
-  end
-
   test "should get new" do
     get new_board_list_url(@board)
 

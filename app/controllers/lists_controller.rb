@@ -27,6 +27,9 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       if @list.save
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.before("new-list", partial: "list", locals: { list: @list })
+        end
         format.html { redirect_to list_url(@list), notice: "List was successfully created." }
         format.json { render :show, status: :created, location: @list }
       else
@@ -40,6 +43,9 @@ class ListsController < ApplicationController
   def update
     respond_to do |format|
       if @list.update(list_params)
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update("label_#{helpers.dom_id(@list)}", @list.title)
+        end
         format.html { redirect_to list_url(@list), notice: "List was successfully updated." }
         format.json { render :show, status: :ok, location: @list }
       else
@@ -55,6 +61,9 @@ class ListsController < ApplicationController
     @list.destroy!
 
     respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(helpers.dom_id(@list))
+      end
       format.html { redirect_to board_lists_url(board), notice: "List was successfully destroyed." }
       format.json { head :no_content }
     end

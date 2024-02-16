@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   end
   resources :workspaces, shallow: true do
     resources :boards do
-      resources :lists do
-        resources :cards
+      resources :lists, except: [:index] do
+        resources :cards, except: [:index]
       end
     end
   end

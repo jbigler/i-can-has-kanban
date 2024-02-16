@@ -10,31 +10,12 @@
        data-sortable-type-value="list">
 
     <% @board.lists.rank(:row_order).each do |list| %>
-
-      <div id="<%= dom_id list %>"
-           data-sortable-update-url="<%= list_path(list) %>"
-           class="min-w-72 max-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex flex-col ">
-
-           <p class="font-bold dark:text-white text-center"> <%= list.title %></p>
-
-           <ul id="cards_for_<%= dom_id(list) %>"
-               data-controller="sortable"
-               data-sortable-list-id="<%= list.id %>"
-               data-sortable-group-value="cards"
-               data-sortable-type-value="card"
-               class="list full flex-grow overflow-y-scroll">
-
-               <% list.cards.rank(:row_order).each do |card| %>
-                 <%= render card %>
-               <% end %>
-           </ul>
-           <%= link_to "Add card", new_list_card_path(list), data: { turbo_frame: "modal" }, class: "font-bold dark:text-white text-center" %>
-      </div>
+      <%= render list %>
     <% end %>
-    <div id="new-list" class="overflow-y-auto overflow-x-clip list min-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
+    <div id="new-list" class="no-drag overflow-y-auto overflow-x-clip list min-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
 
-      <a href="<%= new_board_list_path(@board) %>" class="font-bold dark:text-white text-center"> + Add New List</a>
+      <%= link_to "+ Add New List", new_board_list_path(@board), data: { turbo_frame: "modal" }, class: "font-bold dark:text-white text-center" %>
     </div>
   </div>
-  <%= turbo_frame_tag "modal", class: "contents" %>
+  <%= turbo_frame_tag "modal" %>
 </div>

@@ -9,12 +9,6 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
     @card = @list.cards.create(title: "First card")
   end
 
-  test "should get index" do
-    get list_cards_url(@list)
-
-    assert_response :success
-  end
-
   test "should get new" do
     get new_list_card_url(@list)
 

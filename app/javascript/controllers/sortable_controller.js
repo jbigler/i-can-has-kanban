@@ -12,7 +12,8 @@ export default class extends Controller {
   connect() {
     this.sortable = Sortable.create(this.element, {
       onEnd: this.onEnd.bind(this),
-      group: this.groupValue
+      group: this.groupValue,
+      filter: ".no-drag"
     })
   }
 
@@ -21,8 +22,18 @@ export default class extends Controller {
     var newIndex = event.newIndex
     var sortableListId = event.to.dataset.sortableListId
     var itemType = event.to.dataset.sortableTypeValue
-    patch(sortableUpdateUrl, {
-      body: JSON.stringify({ [itemType]: { row_order_position: newIndex, list_id: sortableListId } }), responseKind: "json"
-    })
+
+    // Check if the dragged item was moved to the last position
+    const isLastPosition = newIndex === this.sortable.toArray().length - 1
+
+    if (isLastPosition) {
+      // Cancel the drop and revert the item to its original position
+      event.from.insertBefore(event.item, event.from.children[event.oldIndex])
+    } else {
+      // Update the database
+      patch(sortableUpdateUrl, {
+        body: JSON.stringify({ [itemType]: { row_order_position: newIndex, list_id: sortableListId } }), responseKind: "json"
+      })
+    }
   }
 }

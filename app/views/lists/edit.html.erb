@@ -1,7 +1,13 @@
 <div class="mx-auto md:w-2/3 w-full">
   <h1 class="font-bold text-4xl">Editing list</h1>
 
-  <%= render "form", list: @list %>
+  <%= turbo_frame_tag "modal" do %>
+    <div tabindex="-1" class="bg-sky-800/50 flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" data-controller="turbo-modal" data-turbo-modal-target="modal" data-action="turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground" >
+      <%= form_with model: @list, class: "contents", id: 'modal-form' do |form| %>
+        <%= render "modal", form:, list: @list %>
+      <% end %>
+    </div>
+  <% end %>
 
   <%= link_to "Show this list", @list, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   <%= link_to "Back to lists", board_lists_path(@list.board), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
