@@ -26,7 +26,7 @@ export default class extends Controller {
     // Check if the dragged item was moved to the last position
     const isLastPosition = newIndex === this.sortable.toArray().length - 1
 
-    if (isLastPosition) {
+    if (isLastPosition && itemType === "list") {
       // Cancel the drop and revert the item to its original position
       event.from.insertBefore(event.item, event.from.children[event.oldIndex])
     } else {
