@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class WorkspacesController < ApplicationController
-  before_action :set_workspace, only: %i[ show edit update destroy ]
+  before_action :set_workspace, only: %i[show edit update destroy]
 
   # GET /workspaces or /workspaces.json
   def index
@@ -7,8 +9,7 @@ class WorkspacesController < ApplicationController
   end
 
   # GET /workspaces/1 or /workspaces/1.json
-  def show
-  end
+  def show; end
 
   # GET /workspaces/new
   def new
@@ -16,8 +17,7 @@ class WorkspacesController < ApplicationController
   end
 
   # GET /workspaces/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /workspaces or /workspaces.json
   def create
@@ -58,13 +58,14 @@ class WorkspacesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_workspace
-      @workspace = Workspace.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def workspace_params
-      params.require(:workspace).permit(:user_id, :name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_workspace
+    @workspace = Workspace.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def workspace_params
+    params.require(:workspace).permit(:user_id, :name)
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CardsController < ApplicationController
   before_action :set_card, only: %i[show edit update destroy]
   before_action :set_list, only: %i[index new create]
@@ -25,8 +27,8 @@ class CardsController < ApplicationController
     respond_to do |format|
       if @card.save
         format.turbo_stream do
-          render turbo_stream: turbo_stream.append("cards_for_" << helpers.dom_id(@list), partial: "card",
-                                                                                          locals: { card: @card })
+          elem = "cards_for_#{helpers.dom_id(@list)}"
+          render turbo_stream: turbo_stream.append(elem, partial: "card", locals: { card: @card })
         end
         format.html { redirect_to card_url(@card), notice: "Card was successfully created." }
         format.json { render :show, status: :created, location: @card }

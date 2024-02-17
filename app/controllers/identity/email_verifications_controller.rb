@@ -1,19 +1,23 @@
-class Identity::EmailVerificationsController < ApplicationController
-  skip_before_action :authenticate, only: :show
+# frozen_string_literal: true
 
-  before_action :set_user, only: :show
+module Identity
+  class EmailVerificationsController < ApplicationController
+    skip_before_action :authenticate, only: :show
 
-  def show
-    @user.update! verified: true
-    redirect_to root_path, notice: "Thank you for verifying your email address"
-  end
+    before_action :set_user, only: :show
 
-  def create
-    send_email_verification
-    redirect_to root_path, notice: "We sent a verification email to your email address"
-  end
+    def show
+      @user.update! verified: true
+      redirect_to root_path, notice: "Thank you for verifying your email address"
+    end
 
-  private
+    def create
+      send_email_verification
+      redirect_to root_path, notice: "We sent a verification email to your email address"
+    end
+
+    private
+
     def set_user
       @user = User.find_by_token_for!(:email_verification, params[:sid])
     rescue StandardError
@@ -23,4 +27,5 @@ class Identity::EmailVerificationsController < ApplicationController
     def send_email_verification
       UserMailer.with(user: Current.user).email_verification.deliver_later
     end
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class List < ApplicationRecord
   include RankedModel
   belongs_to :board
