@@ -27,20 +27,23 @@ class BoardsTest < ApplicationSystemTestCase
   end
 
   test "should update Board" do
-    visit board_url(@board)
-    click_on "Edit this board", match: :first
+    visit workspace_url(@workspace)
+    within("##{dom_id @board}") do
+      click_on "Edit"
+    end
 
     fill_in "Name", with: @board.name
     click_on "Update Board"
 
     assert_text "Board was successfully updated"
-    click_on "Back"
   end
 
   test "should destroy Board" do
     visit workspace_url(@workspace)
     accept_alert do
-      click_on "Delete", match: :first
+      within("##{dom_id @board}") do
+        click_on "Delete"
+      end
     end
 
     assert_text "Board was successfully destroyed"

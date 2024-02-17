@@ -1,8 +1,8 @@
 <p class="text-xl font-bold my-5 dark:text-gray-300"> Workspace: <%= workspace.name %> </p>
 
 <% if action_name != "show" %>
-  <%= link_to "Show this workspace", workspace, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-  <%= link_to "Edit this workspace", edit_workspace_path(workspace), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Show this workspaces", workspace, class: "rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+    <%= link_to "Edit this workspace", edit_workspace_path(workspace), class: "rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
   <hr class="mt-6">
 <% else %>
   <%= turbo_frame_tag "boards", src: workspace_boards_path(workspace) do %>

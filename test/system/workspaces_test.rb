@@ -38,7 +38,10 @@ class WorkspacesTest < ApplicationSystemTestCase
 
   test "should destroy Workspace" do
     visit workspace_url(@workspace)
-    click_on "Destroy this workspace", match: :first
+
+    accept_alert do
+      click_on "Delete workspace", match: :first
+    end
 
     assert_text "Workspace was successfully destroyed"
   end
