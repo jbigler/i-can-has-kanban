@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Cards Controller
 class CardsController < ApplicationController
   before_action :set_card, only: %i[show edit update destroy]
   before_action :set_list, only: %i[index new create]

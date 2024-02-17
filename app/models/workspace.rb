@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Workspace
 class Workspace < ApplicationRecord
   has_many :users_workspaces, dependent: :delete_all
   has_many :users, through: :users_workspaces
