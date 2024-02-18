@@ -18,7 +18,7 @@ ENV APP_GROUP_GID=${APP_GROUP_GID}
 ENV BUILD_PACKAGES="curl-dev ruby-dev build-base zsh xdg-user-dirs" \
     DEV_PACKAGES="ctags gzip py3-pip unzip zlib-dev libxml2-dev libxslt-dev tzdata yaml-dev sqlite-dev" \
     VIM_PACKAGES="xclip stylua tree-sitter nodejs npm python3 go alpine-sdk neovim fd fd-zsh-completion fzf git lazygit ripgrep bottom lua xclip" \
-    RUBY_PACgKAGES="ruby-json" \
+    RUBY_PACKAGES="ruby-json jemalloc" \
     RAILS_PACKAGES="build-base gcompat vips tzdata git"
 
 # Configure Bundler
@@ -34,6 +34,8 @@ RUN --mount=type=cache,target=/var/cache/apk \
     $VIM_PACKAGES \
     $RUBY_PACKAGES \
     $RAILS_PACKAGES
+
+ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
 
 RUN --mount=type=cache,target=$BUNDLE_APP_CONFIG \
     gem update --system && \
