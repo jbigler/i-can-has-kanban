@@ -38,6 +38,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_10_131835) do
     t.index ["board_id"], name: "index_lists_on_board_id"
   end
 
+  create_table "memberships", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "workspace_id", null: false
+    t.integer "role", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "workspace_id"], name: "index_memberships_on_user_id_and_workspace_id", unique: true
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+    t.index ["workspace_id", "user_id"], name: "index_memberships_on_workspace_id_and_user_id"
+    t.index ["workspace_id"], name: "index_memberships_on_workspace_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "user_agent"
@@ -55,13 +67,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_10_131835) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-  end
-
-  create_table "users_workspaces", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "workspace_id", null: false
-    t.index ["user_id", "workspace_id"], name: "index_users_workspaces_on_user_id_and_workspace_id"
-    t.index ["workspace_id", "user_id"], name: "index_users_workspaces_on_workspace_id_and_user_id"
   end
 
   create_table "workspaces", force: :cascade do |t|

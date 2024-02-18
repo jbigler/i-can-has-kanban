@@ -1,10 +1,19 @@
 # frozen_string_literal: true
 
+# User model
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :users_workspaces, dependent: :destroy
-  has_many :workspaces, through: :users_workspaces
+  has_many :memberships, dependent: :destroy
+  has_many :workspaces, through: :memberships do
+    def mine
+      where(memberships: { role: Membership.roles[:owner] })
+    end
+
+    def others
+      where.not(memberships: { role: Membership.roles[:owner] })
+    end
+  end
 
   generates_token_for :email_verification, expires_in: 2.days do
     email

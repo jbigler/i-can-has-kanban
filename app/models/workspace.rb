@@ -2,7 +2,11 @@
 
 # Workspace
 class Workspace < ApplicationRecord
-  has_many :users_workspaces, dependent: :delete_all
-  has_many :users, through: :users_workspaces
+  has_many :memberships, dependent: :delete_all
+  has_many :users, through: :memberships
   has_many :boards, dependent: :destroy
+
+  def owner
+    users.where(memberships: { role: Membership.roles[:owner] }).first
+  end
 end
