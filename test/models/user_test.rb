@@ -4,7 +4,7 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   context "associations" do
-    should have_many(:memberships)
+    should have_many(:memberships).dependent(:destroy)
     should have_many(:workspaces).through(:memberships)
     should have_many(:sessions).dependent(:destroy)
   end

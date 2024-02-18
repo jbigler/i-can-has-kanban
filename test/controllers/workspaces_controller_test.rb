@@ -4,7 +4,7 @@ require "test_helper"
 
 class WorkspacesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = sign_in_as(create(:user_with_workspaces))
+    @user = sign_in_as(create(:user_with_workspace))
     @workspace = @user.workspaces.first
   end
 

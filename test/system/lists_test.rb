@@ -4,7 +4,7 @@ require "application_system_test_case"
 
 class ListsTest < ApplicationSystemTestCase
   setup do
-    @user = sign_in_as(create(:user_with_workspaces))
+    @user = sign_in_as(create(:user_with_workspace))
     @workspace = @user.workspaces.first
     @board = @workspace.boards.create(name: "Test Board")
     @list = @board.lists.create(title: "First List")

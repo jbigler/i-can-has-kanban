@@ -4,6 +4,7 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_many :sessions, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :workspaces, through: :memberships do
     def mine
@@ -21,8 +22,6 @@ class User < ApplicationRecord
   generates_token_for :password_reset, expires_in: 20.minutes do
     password_salt.last(10)
   end
-
-  has_many :sessions, dependent: :destroy
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }

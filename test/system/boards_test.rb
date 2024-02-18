@@ -4,7 +4,7 @@ require "application_system_test_case"
 
 class BoardsTest < ApplicationSystemTestCase
   setup do
-    @user = sign_in_as(create(:user_with_workspaces))
+    @user = sign_in_as(create(:user_with_3_workspaces))
     @workspace = @user.workspaces.first
     @board = @workspace.boards.create(name: "Test Board")
   end
