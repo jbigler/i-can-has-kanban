@@ -1,20 +1,27 @@
 <div class="h-full max-h-full flex flex-col overflow-hidden">
   <div class="self-center flex flex-row">
     <p class="text-2xl font-bold dark:text-white pb-2"> <%= @board.name %> </p>
-    <%= link_to"Edit this board", edit_board_path(@board), class: "mt-2 rounded-lg px-3 bg-gray-100 inline-block font-medium m-2" %>
+    <% if policy(@board).edit? %>
+      <%= link_to"Edit this board", edit_board_path(@board), class: "mt-2 rounded-lg px-3 bg-gray-100 inline-block font-medium m-2" %>
+    <% end %>
     <%= link_to"Back to boards", workspace_path(@board.workspace), class: "mt-2 rounded-lg px-3 bg-gray-100 inline-block font-medium m-2" %>
   </div>
 
-  <div class="flex-grow max-h-full flex flex-row bg-gray-400 overflow-x-scroll"
-       data-controller="sortable"
-       data-sortable-type-value="list">
+  <div id="lists"
+    <% if policy(@board.lists.build(title: "New List")).update? %>
+         data-controller="sortable"
+         data-sortable-type-value="list"
+       <% end %>
+         class="flex-grow max-h-full flex flex-row bg-gray-400 overflow-x-scroll">
 
-    <% @board.lists.rank(:row_order).each do |list| %>
-      <%= render list %>
-    <% end %>
-    <div id="new-list" class="min-w-72 max-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex flex-col">
-      <%= link_to "+ Add New List", new_board_list_path(@board), data: { turbo_frame: "modal" }, class: "font-bold dark:text-white text-center" %>
-    </div>
+         <% @board.lists.rank(:row_order).each do |list| %>
+           <%= render list %>
+         <% end %>
+         <% if policy(@board.lists.build(title: "New List")).new? %>
+           <div id="new-list" class="min-w-72 max-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex flex-col">
+             <%= link_to "+ Add New List", new_board_list_path(@board), data: { turbo_frame: "modal" }, class: "font-bold dark:text-white text-center" %>
+           </div>
+         <% end %>
   </div>
   <%= turbo_frame_tag "modal" %>
 </div>
