@@ -28,6 +28,6 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    flash[:notice] = "You are not authorized to perform this action."
+    flash.now[:notice] = "You are not authorized to perform this action."
   end
 end

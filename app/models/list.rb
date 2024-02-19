@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# List Class
 class List < ApplicationRecord
   include RankedModel
 
