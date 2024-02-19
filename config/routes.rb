@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     end
   end
   get "settings", to: "settings#index"
+  get "help", to: "help#index"
 
   root "home#index"
 
