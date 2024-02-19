@@ -1,13 +1,20 @@
 <div class="mt-20 container mx-auto">
   <div class="flex justify-between items-center">
-    <h1 flex-1 class="flex-auto text-center font-bold text-3xl dark:text-gray-300">My Workspaces</h1>
     <%= link_to "New workspace", new_workspace_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <h1 flex-1 class="flex-auto text-center font-bold text-3xl dark:text-gray-300">My Workspaces</h1>
   </div>
-  <p class="ml-6 mt-6 mb-3">Here you can create workspaces to separate projects.</p>
-  <p class="ml-6 mb-3">Each workspace can have multiple kanban boards.</p>
-  <p class="ml-6 mb-3">Workspaces can either be kept private or shared with others.</p>
+  <div class="flex flex-col items-center">
+    <p class="ml-6 mt-6 mb-3">Here you can create workspaces to separate projects. <br>Each workspace can have multiple kanban boards. <br>Workspaces can either be kept private or shared with others.</p>
+  </div>
+  <div id="my_workspaces" class="min-w-full">
+    <%= render @my_workspaces, partial: "workspace" %>
+  </div>
 
-  <div id="workspaces" class="min-w-full">
-    <%= render @workspaces %>
+  <div class="flex justify-between items-center">
+    <h1 flex-1 class="mt-4 flex-auto text-center font-bold text-3xl dark:text-gray-300">Other workspaces I can access</h1>
+  </div>
+
+  <div id="others_workspaces" class="min-w-full">
+    <%= render @others_workspaces, partial: "workspace" %>
   </div>
 </div>

@@ -4,6 +4,6 @@
     <%= link_to "New board", new_workspace_board_path(@workspace), class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
   <%= turbo_frame_tag "boards", class: "flex flex-col gap-3 lg:flex-row lg:flex-wrap" do %>
-    <%= render @boards %>
+    <%= render partial: "board", collection: @boards %>
   <% end %>
 </div>

@@ -51,6 +51,7 @@ gem "bootsnap", require: false
 
 gem "authentication-zero"
 gem "litestack"
+gem "pundit"
 gem "ranked-model"
 
 group :development, :test do

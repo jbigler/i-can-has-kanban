@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+# Workspaces Controller
 class WorkspacesController < ApplicationController
   before_action :set_workspace, only: %i[show edit update destroy]
 
   # GET /workspaces or /workspaces.json
   def index
-    @workspaces = Workspace.all
+    @my_workspaces = Current.user.workspaces.mine
+    @others_workspaces = Current.user.workspaces.others
   end
 
   # GET /workspaces/1 or /workspaces/1.json
@@ -13,7 +15,8 @@ class WorkspacesController < ApplicationController
 
   # GET /workspaces/new
   def new
-    @workspace = Workspace.new
+    @workspace = Current.user.workspaces.new
+    authorize @workspace
   end
 
   # GET /workspaces/1/edit
@@ -21,10 +24,12 @@ class WorkspacesController < ApplicationController
 
   # POST /workspaces or /workspaces.json
   def create
-    @workspace = Workspace.new(workspace_params)
+    @workspace = Current.user.workspaces.new(workspace_params)
+    authorize @workspace
 
     respond_to do |format|
       if @workspace.save
+        Current.user.workspaces << @workspace
         format.html { redirect_to workspace_url(@workspace), notice: "Workspace was successfully created." }
         format.json { render :show, status: :created, location: @workspace }
       else
@@ -61,11 +66,12 @@ class WorkspacesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_workspace
-    @workspace = Workspace.find(params[:id])
+    @workspace = Current.user.workspaces.find(params[:id])
+    authorize @workspace
   end
 
   # Only allow a list of trusted parameters through.
   def workspace_params
-    params.require(:workspace).permit(:user_id, :name)
+    params.require(:workspace).permit(:name)
   end
 end

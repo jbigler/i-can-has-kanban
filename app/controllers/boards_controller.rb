@@ -15,6 +15,7 @@ class BoardsController < ApplicationController
   # GET /boards/new
   def new
     @board = @workspace.boards.new
+    authorize @board
   end
 
   # GET /boards/1/edit
@@ -23,6 +24,7 @@ class BoardsController < ApplicationController
   # POST /boards or /boards.json
   def create
     @board = @workspace.boards.new(board_params)
+    authorize @board
 
     respond_to do |format|
       if @board.save
@@ -64,10 +66,11 @@ class BoardsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_board
     @board = Board.find(params[:id])
+    authorize @board
   end
 
   def set_workspace
-    @workspace = Workspace.find(params[:workspace_id])
+    @workspace = Current.user.workspaces.find(params[:workspace_id])
   end
 
   # Only allow a list of trusted parameters through.

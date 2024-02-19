@@ -16,6 +16,7 @@ class ListsController < ApplicationController
   # GET /lists/new
   def new
     @list = @board.lists.new
+    authorize @list
   end
 
   # GET /lists/1/edit
@@ -24,6 +25,7 @@ class ListsController < ApplicationController
   # POST /lists or /lists.json
   def create
     @list = @board.lists.new(list_params)
+    authorize @list
 
     respond_to do |format|
       if @list.save
@@ -76,6 +78,7 @@ class ListsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_list
     @list = List.find(params[:id])
+    authorize @list
   end
 
   def set_board

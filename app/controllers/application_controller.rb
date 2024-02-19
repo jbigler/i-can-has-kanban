@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+# Base Application Controller
 class ApplicationController < ActionController::Base
   before_action :set_current_request_details
   before_action :authenticate
+  include Pundit::Authorization
 
   private
 
@@ -17,5 +19,13 @@ class ApplicationController < ActionController::Base
   def set_current_request_details
     Current.user_agent = request.user_agent
     Current.ip_address = request.ip
+  end
+
+  def pundit_user
+    Current.user
+  end
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
   end
 end
