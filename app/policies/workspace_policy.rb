@@ -2,13 +2,6 @@
 
 # Workspace Authorization Policy
 class WorkspacePolicy < ApplicationPolicy
-  def update?
-    permitted_roles = Membership.roles.except(:viewer)
-
-    role = @user.memberships.where(workspace_id: record.id).first.role
-    permitted_roles.include?(role)
-  end
-
   # Anyone can open the index to their workspaces
   def index?
     true
@@ -16,6 +9,13 @@ class WorkspacePolicy < ApplicationPolicy
 
   def show?
     true
+  end
+
+  def update?
+    permitted_roles = Membership.roles.except(:editor, :viewer)
+
+    role = @user.memberships.where(workspace_id: record.id).first.role
+    permitted_roles.include?(role)
   end
 
   # Anyone can create workspaces within their own account

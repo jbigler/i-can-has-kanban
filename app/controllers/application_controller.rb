@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate
   include Pundit::Authorization
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   private
 
   def authenticate
@@ -26,6 +28,6 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    flash[:alert] = "You are not authorized to perform this action."
+    flash[:notice] = "You are not authorized to perform this action."
   end
 end

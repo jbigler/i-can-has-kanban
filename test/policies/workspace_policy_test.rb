@@ -52,8 +52,8 @@ class WorkspacePolicyTest < ActiveSupport::TestCase
       assert_permit @editor, @workspace, :show
       assert_permit @editor, @workspace, :new
       assert_permit @editor, @workspace, :create
-      assert_permit @editor, @workspace, :edit
-      assert_permit @editor, @workspace, :update
+      refute_permit @editor, @workspace, :edit
+      refute_permit @editor, @workspace, :update
       refute_permit @editor, @workspace, :destroy
     end
   end
