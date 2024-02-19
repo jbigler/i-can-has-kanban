@@ -1,32 +1,26 @@
-<h1>Devices & Sessions</h1>
+<div class="mt-12 flex flex-col mx-auto">
+  <h2 class="py-6 text-4xl font-bold dark:text-white">Devices & Sessions</h2>
 
-<div id="sessions">
-  <% @sessions.each do |session| %>
-    <div id="<%= dom_id session %>">
-      <p>
+  <div id="sessions">
+    <% @sessions.each do |session| %>
+      <div id="<%= dom_id session %>" class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <p class="my-2">
         <strong>User Agent:</strong>
         <%= session.user_agent %>
-      </p>
+        </p>
 
-      <p>
+        <p class="my-2">
         <strong>Ip Address:</strong>
         <%= session.ip_address %>
-      </p>
+        </p>
 
-      <p>
+        <p class="my-2">
         <strong>Created at:</strong>
         <%= session.created_at %>
-      </p>
-
-    </div>
-    <p>
-      <%= button_to "Log out", session, method: :delete %>
-    </p>
-  <% end %>
+        </p>
+        <%= button_to "Log this device out", session, method: :delete, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<br>
-
-<div>
-  <%= link_to "Back", root_path %>
-</div>
