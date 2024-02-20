@@ -13,7 +13,7 @@ class SessionsTest < ApplicationSystemTestCase
 
     click_on "Sessions"
 
-    assert_selector "h1", text: "Devices & Sessions"
+    assert_text "Devices & Sessions"
   end
 
   test "signing in" do

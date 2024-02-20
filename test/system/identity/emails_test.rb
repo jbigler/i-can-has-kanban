@@ -16,7 +16,7 @@ module Identity
       click_on "Change email address"
 
       fill_in "New email", with: "new_email@hey.com"
-      fill_in "Password challenge", with: "Secret1*3*5*"
+      fill_in "Confirm password", with: "Secret1*3*5*"
       click_on "Save changes"
 
       assert_text "Your email has been changed"

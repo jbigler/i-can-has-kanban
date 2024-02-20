@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Identity
+  # Controller for changing user email address
   class EmailsController < ApplicationController
     before_action :set_user
 

@@ -1,6 +1,6 @@
 <div class="flex justify-center mt-8">
   <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-    <% if !Current.user.verified? %>
+    <% if !@user.verified? %>
       <div class="space-y-6">
         <h5 class="text-xl font-medium text-gray-900 dark:text-white">Verify your email</h5>
         <p class="mb-3 text-gray-500 dark:text-gray-400">You must verify your email address before it can be changed.</p>
