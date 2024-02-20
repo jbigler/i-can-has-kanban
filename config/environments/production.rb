@@ -4,6 +4,7 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.action_mailer.default_url_options = { host: "has-kanban.fly.dev" }
 
   # Code is not reloaded between requests.
   config.enable_reloading = false
@@ -74,6 +75,16 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "i_can_has_kanban_production"
 
   config.action_mailer.perform_caching = false
+
+  config.action_mailer.smtp_settings = {
+    user_name: "apikey", # This is the string literal 'apikey', NOT the ID of your API key
+    password: ENV.fetch("SENDGRID_API_KEY", nil), # This is the secret sendgrid API key
+    domain: "fly.dev",
+    address: "smtp.sendgrid.net",
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
