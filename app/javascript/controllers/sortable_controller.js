@@ -13,7 +13,7 @@ export default class extends Controller {
     this.sortable = Sortable.create(this.element, {
       onEnd: this.onEnd.bind(this),
       group: this.groupValue,
-      filter: ".no-drag"
+      draggable: ".draggable"
     })
   }
 

@@ -1,6 +1,6 @@
 <div id="<%= dom_id list %>"
      data-sortable-update-url="<%= list_path(list) %>"
-     class="min-w-72 max-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex flex-col">
+     class="draggable min-w-72 max-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 flex flex-col">
 
      <% if policy(list).update? %>
          <%= link_to list.title, edit_list_path(list), id: "label_#{ dom_id list}", class: "font-bold dark:text-white text-center", data: { turbo_frame: "modal" } %>
