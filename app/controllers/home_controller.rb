@@ -7,10 +7,9 @@ class HomeController < ApplicationController
   end
 
   private
+    def authenticate
+      return unless (session_record = Session.find_by(id: cookies.signed[:session_token]))
 
-  def authenticate
-    return unless (session_record = Session.find_by(id: cookies.signed[:session_token]))
-
-    Current.session = session_record
-  end
+      Current.session = session_record
+    end
 end

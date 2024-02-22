@@ -50,7 +50,6 @@ class CardsController < ApplicationController
           render turbo_stream: turbo_stream.replace(helpers.dom_id(@card), partial: "card", locals: { card: @card })
         end
         format.html { redirect_to card_url(@card), notice: "Card was successfully updated." }
-        # format.json { render :show, status: :ok, location: @card }
         format.json { render :show, status: :ok, location: @card }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,6 +57,7 @@ class CardsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   # DELETE /cards/1 or /cards/1.json
   def destroy
@@ -74,19 +74,18 @@ class CardsController < ApplicationController
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_card
+      @card = Card.find(params[:id])
+      authorize @card
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_card
-    @card = Card.find(params[:id])
-    authorize @card
-  end
+    def set_list
+      @list = List.find(params[:list_id])
+    end
 
-  def set_list
-    @list = List.find(params[:list_id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def card_params
-    params.require(:card).permit(:row_order_position, :list_id, :title, :description)
-  end
+    # Only allow a list of trusted parameters through.
+    def card_params
+      params.require(:card).permit(:row_order_position, :list_id, :title, :description)
+    end
 end

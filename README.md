@@ -1,4 +1,4 @@
-# I Can Has Kanban? 
+# I Can Has Kanban?
 *Yes, you can!*
 
 Welcome to the meme Kanban board that I created as a learning project for the latest Rails stack.

@@ -1,15 +1,6 @@
 <div class="flex justify-center mt-8">
   <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-    <% if !@user.verified? %>
-      <div class="space-y-6">
-        <h5 class="text-xl font-medium text-gray-900 dark:text-white">Verify your email</h5>
-        <p class="mb-3 text-gray-500 dark:text-gray-400">You must verify your email address before it can be changed.</p>
-        <p class="mb-3 text-gray-500 dark:text-gray-400">We sent a verification email to the address below. Look for that email and follow the instructions to confirm it's your email address.</p>
-        <p class="mb-3 text-gray-700 dark:text-gray-300"><%= Current.user.email %></p>
-        <p class="mb-3 text-gray-500 dark:text-gray-400"> Be sure to check in your spam folder if you aren't able to find the message.</p>
-        <%= button_to "Re-send verification email", identity_email_verification_path, class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
-      </div>
-    <% else %>
+    <% if Current.user.verified? %>
       <%= form_with(url: identity_email_path, method: :patch, class: "space-y-6") do |form| %>
         <h5 class="text-xl font-medium text-gray-900 dark:text-white">Change your email address</h5>
         <% if @user.errors.any? %>
@@ -36,6 +27,15 @@
           <%= form.submit "Save changes", class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
         </div>
       <% end %>
+    <% else %>
+      <div class="space-y-6">
+        <h5 class="text-xl font-medium text-gray-900 dark:text-white">Verify your email</h5>
+        <p class="mb-3 text-gray-500 dark:text-gray-400">You must verify your email address before it can be changed.</p>
+        <p class="mb-3 text-gray-500 dark:text-gray-400">We sent a verification email to the address below. Look for that email and follow the instructions to confirm it's your email address.</p>
+        <p class="mb-3 text-gray-700 dark:text-gray-300"><%= Current.user.email %></p>
+        <p class="mb-3 text-gray-500 dark:text-gray-400"> Be sure to check in your spam folder if you aren't able to find the message.</p>
+        <%= button_to "Re-send verification email", identity_email_verification_path, class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+      </div>
     <% end %>
   </div>
 </div>

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Sessions Controller
 class SessionsController < ApplicationController
   skip_before_action :authenticate, only: %i[new create]
 
@@ -18,9 +19,10 @@ class SessionsController < ApplicationController
 
       redirect_to workspaces_path, notice: "Signed in successfully"
     else
-      redirect_to sign_in_path(email_hint: params[:email]), alert: "That email or password is incorrect"
+      redirect_to sign_in_path(email_hint: params[:email]), notice: "That email or password is incorrect"
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def destroy
     @session.destroy
@@ -28,8 +30,7 @@ class SessionsController < ApplicationController
   end
 
   private
-
-  def set_session
-    @session = Current.user.sessions.find(params[:id])
-  end
+    def set_session
+      @session = Current.user.sessions.find(params[:id])
+    end
 end

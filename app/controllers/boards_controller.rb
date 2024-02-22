@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Boards Controller
 class BoardsController < ApplicationController
   before_action :set_board, only: %i[show edit update destroy]
   before_action :set_workspace, only: %i[index new create]
@@ -62,19 +63,18 @@ class BoardsController < ApplicationController
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_board
+      @board = Board.find(params[:id])
+      authorize @board
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_board
-    @board = Board.find(params[:id])
-    authorize @board
-  end
+    def set_workspace
+      @workspace = Current.user.workspaces.find(params[:workspace_id])
+    end
 
-  def set_workspace
-    @workspace = Current.user.workspaces.find(params[:workspace_id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def board_params
-    params.require(:board).permit(:workspace_id, :name)
-  end
+    # Only allow a list of trusted parameters through.
+    def board_params
+      params.require(:board).permit(:workspace_id, :name)
+    end
 end

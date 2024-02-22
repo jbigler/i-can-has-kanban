@@ -38,6 +38,7 @@ class WorkspacesController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   # PATCH/PUT /workspaces/1 or /workspaces/1.json
   def update
@@ -63,15 +64,14 @@ class WorkspacesController < ApplicationController
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_workspace
+      @workspace = Current.user.workspaces.find(params[:id])
+      authorize @workspace
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_workspace
-    @workspace = Current.user.workspaces.find(params[:id])
-    authorize @workspace
-  end
-
-  # Only allow a list of trusted parameters through.
-  def workspace_params
-    params.require(:workspace).permit(:name)
-  end
+    # Only allow a list of trusted parameters through.
+    def workspace_params
+      params.require(:workspace).permit(:name)
+    end
 end

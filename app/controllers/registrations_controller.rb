@@ -22,12 +22,11 @@ class RegistrationsController < ApplicationController
   end
 
   private
+    def user_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
 
-  def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
-  end
-
-  def send_email_verification
-    UserMailer.with(user: @user).email_verification.deliver_later
-  end
+    def send_email_verification
+      UserMailer.with(user: @user).email_verification.deliver_later
+    end
 end

@@ -56,6 +56,7 @@ class ListsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   # DELETE /lists/1 or /lists/1.json
   def destroy
@@ -74,19 +75,18 @@ class ListsController < ApplicationController
   def update_position; end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_list
+      @list = List.find(params[:id])
+      authorize @list
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_list
-    @list = List.find(params[:id])
-    authorize @list
-  end
+    def set_board
+      @board = Board.find(params[:board_id])
+    end
 
-  def set_board
-    @board = Board.find(params[:board_id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def list_params
-    params.require(:list).permit(:board_id, :title, :row_order_position)
-  end
+    # Only allow a list of trusted parameters through.
+    def list_params
+      params.require(:list).permit(:board_id, :title, :row_order_position)
+    end
 end
