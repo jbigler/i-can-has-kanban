@@ -17,14 +17,8 @@
     <div class="p-4 md:p-5">
       <div class="grid gap-4 mb-4 grid-cols-2">
         <div class="col-span-2">
-          <%= form.label :title, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"  %>
-          <% card_frame_id = dom_id(card, "turbo_frame") %>
-          <%= turbo_frame_tag card_frame_id, class: "contents" do %>
-            <%= form.text_field :title, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Title", required: "" %>
-            <% if card.persisted? %>
-              <%= render partial: 'inline_buttons', locals: { form: form, card: card } %>
-            <% end %>
-          <% end %>
+          <%= form.label :title, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+          <%= form.text_field :title, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Title", required: "", autofocus: "" %>
         </div>
         <div class="col-span-2">
           <%= form.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
