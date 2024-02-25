@@ -4,6 +4,7 @@
 Welcome to the meme Kanban board that I created as a learning project for the latest Rails stack.
 
 The project is deployed on a free fly.io instance at http://has-kanban.fly.dev
+Since it's a free runner it may take a few seconds to spin up.
 
 After creating an account, you can create workspaces which will be able to be shared with others.
 Within a workspace you can create as many boards as you need.
@@ -22,9 +23,9 @@ The boards and lists can be manipulated via drag-and-drop.
 - Pundit
 - Minitest
 - FactoryBot
+- Github Actions for CI/CD
 
 ## To-Do
-- Implement Github Actions for CD/CD.
 - Implement broadcast turbo-streams to allow muliple users to use the same board.
 - Send invitations to members.
 - Member management for workspaces.
