@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "simplecov"
-SimpleCov.start "rails"
+# SimpleCov.start "rails"
 Rails.application.eager_load!
 
 ENV["RAILS_ENV"] ||= "test"
@@ -23,13 +23,13 @@ module ActiveSupport
     # Fix simplecov failing when run in parallel.
     # https://github.com/simplecov-ruby/simplecov/issues/718
     # If it still has problems then disable parallelize.
-    parallelize_setup do |worker|
-      SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
-    end
-
-    parallelize_teardown do |_worker|
-      SimpleCov.result
-    end
+    # parallelize_setup do |worker|
+    #   SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
+    # end
+    #
+    # parallelize_teardown do |_worker|
+    #   SimpleCov.result
+    # end
 
     # Activate FactoryBot methods
     include FactoryBot::Syntax::Methods
