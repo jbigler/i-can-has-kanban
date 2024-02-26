@@ -86,4 +86,3 @@ Rails.application.configure do
     addrinfo.ipv4? ? res << IPAddr.new(addrinfo.ip_address).mask(24) : res
   end
 end
-# rubocop:enable Metrics/BlockLength
