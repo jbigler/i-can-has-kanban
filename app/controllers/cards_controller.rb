@@ -31,7 +31,7 @@ class CardsController < ApplicationController
       if @card.save
         format.turbo_stream do
           elem = "cards_for_#{helpers.dom_id(@list)}"
-          render turbo_stream: turbo_stream.append(elem, partial: "card", locals: { card: @card })
+          @card.broadcast_append_to @list, :cards, target: elem, partial: "cards/card"
         end
         format.html { redirect_to card_url(@card), notice: "Card was successfully created." }
         format.json { render :show, status: :created, location: @card }
@@ -44,10 +44,24 @@ class CardsController < ApplicationController
 
   # PATCH/PUT /cards/1 or /cards/1.json
   def update
+    prev_row_order = @card.row_order
+    prev_list_id = @card.list_id
+
     respond_to do |format|
       if @card.update(card_params)
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(helpers.dom_id(@card), partial: "card", locals: { card: @card })
+          if prev_row_order != @card.row_order
+            # Reload the entire list
+            @card.list.broadcast_replace_to @card.list.board, :lists, partial: "lists/list"
+            if prev_list_id != @card.list_id
+              # Reload previous list as well
+              List.find_by(id: prev_list_id).broadcast_replace_to @card.list.board, :lists, partial: "lists/list"
+            end
+          else
+            @card.broadcast_replace_to @card.list, :cards, partial: "cards/card"
+          end
+
+          # TODO refresh affected lists
         end
         format.html { redirect_to card_url(@card), notice: "Card was successfully updated." }
         format.json { render :show, status: :ok, location: @card }
@@ -66,7 +80,7 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.remove(helpers.dom_id(@card))
+        @card.broadcast_remove_to list, :cards
       end
       format.html { redirect_to list_cards_url(list), notice: "Card was successfully destroyed." }
       format.json { head :no_content }

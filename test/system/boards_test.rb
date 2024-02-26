@@ -9,15 +9,21 @@ class BoardsTest < ApplicationSystemTestCase
     @board = @workspace.boards.create(name: "Test Board")
   end
 
-  test "visiting the index" do
+  test "should display boards" do
     visit workspace_boards_url(@workspace)
 
     assert_selector "h1", text: "Boards"
   end
 
+  test "should display boards on workspace" do
+    visit workspace_url(@workspace)
+
+    assert_text "Test Board"
+  end
+
   test "should create board" do
     visit workspace_boards_url(@workspace)
-    click_on "New board"
+    click_on "Add board"
 
     fill_in "Name", with: @board.name
     click_on "Create Board"
@@ -26,7 +32,18 @@ class BoardsTest < ApplicationSystemTestCase
     click_on "Back"
   end
 
-  test "should update Board" do
+  test "should create board from workspace" do
+    visit workspace_url(@workspace)
+    click_on "Add board"
+
+    fill_in "Name", with: "My new board"
+    click_on "Create Board"
+
+    assert_text "Board was successfully created"
+    assert_text "My new board"
+  end
+
+  test "should update board from workspace" do
     visit workspace_url(@workspace)
     within("##{dom_id @board}") do
       click_on "Edit"

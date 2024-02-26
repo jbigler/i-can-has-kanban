@@ -30,7 +30,7 @@ class ListsController < ApplicationController
     respond_to do |format|
       if @list.save
         format.turbo_stream do
-          render turbo_stream: turbo_stream.before("new-list", partial: "list", locals: { list: @list })
+          @list.broadcast_before_to @list.board, :lists, target: "new-list", partial: "lists/list"
         end
         format.html { redirect_to list_url(@list), notice: "List was successfully created." }
         format.json { render :show, status: :created, location: @list }
@@ -65,7 +65,7 @@ class ListsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.remove(helpers.dom_id(@list))
+        @list.broadcast_remove_to board, :lists
       end
       format.html { redirect_to board_lists_url(board), notice: "List was successfully destroyed." }
       format.json { head :no_content }

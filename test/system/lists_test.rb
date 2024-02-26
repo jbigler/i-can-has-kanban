@@ -7,16 +7,16 @@ class ListsTest < ApplicationSystemTestCase
     @user = sign_in_as(create(:user_with_workspace))
     @workspace = @user.workspaces.first
     @board = @workspace.boards.create(name: "Test Board")
-    @list = @board.lists.create(title: "First List")
+    @list1 = @board.lists.create(title: "First List")
   end
 
-  test "visiting boards#show" do
+  test "should see list on board" do
     visit board_url(@board)
 
-    assert_selector "a#label_#{dom_id @list}", text: @list.title
+    assert_selector "a#label_#{dom_id @list1}", text: @list1.title
   end
 
-  test "should create list" do
+  test "should create list on board" do
     visit board_url(@board)
     click_on "+ Add New List"
 
@@ -45,5 +45,21 @@ class ListsTest < ApplicationSystemTestCase
     end
 
     refute_text "First List"
+  end
+
+  test "should drag and drop list" do
+    @list2 = @board.lists.create(title: "Second List")
+
+    assert @list1.row_order < @list2.row_order
+
+    visit board_url(@board)
+    handle = find("#list_#{@list1.id}")
+    targetRow = find("#list_#{@list2.id}")
+
+    handle.drag_to(targetRow)
+    @list1.reload
+    @list2.reload
+
+    assert @list1.row_order > @list2.row_order
   end
 end

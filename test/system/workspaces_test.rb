@@ -43,6 +43,6 @@ class WorkspacesTest < ApplicationSystemTestCase
       click_on "Delete workspace", match: :first
     end
 
-    assert_text "Workspace was successfully destroyed"
+    assert_text "Workspace was successfully deleted"
   end
 end

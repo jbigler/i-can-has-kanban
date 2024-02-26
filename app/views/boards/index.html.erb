@@ -1,7 +1,7 @@
 <div class="w-full">
   <div class="flex justify-between mb-4">
     <h1 class="flex-auto text-center font-bold text-4xl">Boards</h1>
-    <%= link_to "New board", new_workspace_board_path(@workspace), class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <%= link_to "Add board", new_workspace_board_path(@workspace), class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
   <%= turbo_frame_tag "boards", class: "flex flex-col gap-3 lg:flex-row lg:flex-wrap" do %>
     <%= render partial: "board", collection: @boards %>

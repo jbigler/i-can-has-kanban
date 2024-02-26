@@ -8,6 +8,7 @@
          <p class="font-bold dark:text-white text-center"><%= list.title %></p>
      <% end %>
 
+     <%= turbo_stream_from list, :cards %>
      <ul id="cards_for_<%= dom_id(list) %>"
          <% if policy(list.cards.build(title: "New Card")).update? %>
              data-controller="sortable"
