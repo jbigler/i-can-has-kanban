@@ -161,6 +161,10 @@ GEM
       activesupport (>= 5.0.0)
     json (2.7.1)
     language_server-protocol (3.17.0.3)
+    launchy (2.5.2)
+      addressable (~> 2.8)
+    letter_opener (1.9.0)
+      launchy (>= 2.2, < 3)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -371,7 +375,7 @@ GEM
       railties (>= 6.0.0)
     tailwindcss-rails (2.3.0-x86_64-linux)
       railties (>= 6.0.0)
-    thor (1.3.0)
+    thor (1.3.1)
     tilt (2.3.0)
     timeout (0.4.1)
     turbo-rails (2.0.4)
@@ -420,6 +424,7 @@ DEPENDENCIES
   guard-minitest
   importmap-rails
   jbuilder
+  letter_opener
   litestack
   minitest-reporters
   pry-rails

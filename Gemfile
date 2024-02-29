@@ -68,6 +68,7 @@ group :development do
 
   gem "brakeman"
   gem "bundler-audit"
+  gem "letter_opener"
   gem "rails_live_reload"
 
   gem "rubocop", ">= 1.25.1", require: false
