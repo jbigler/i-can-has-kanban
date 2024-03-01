@@ -2,7 +2,7 @@
 
 # Membership class
 class Membership < ApplicationRecord
-  enum role: { owner: 0, admin: 1, editor: 2, viewer: 3 }
+  include RoleEnum
 
   after_destroy :destroy_owned_workspaces
 

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resource :password_reset,     only: %i[new edit create update]
   end
   resources :workspaces, shallow: true do
+    resource :invitation, only: %i[new create]
     resources :boards do
       resources :lists, except: [:index] do
         resources :cards, except: [:index]

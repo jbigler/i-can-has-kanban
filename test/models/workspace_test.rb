@@ -7,6 +7,7 @@ class WorkspaceTest < ActiveSupport::TestCase
     should have_many(:memberships).dependent(:delete_all)
     should have_many(:users).through(:memberships)
     should have_many(:boards).dependent(:destroy)
+    should have_many(:invitations).dependent(:destroy)
   end
 
   test "should access the owning User through owner method" do

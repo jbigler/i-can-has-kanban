@@ -7,6 +7,7 @@ class UserTest < ActiveSupport::TestCase
     should have_many(:memberships).dependent(:destroy)
     should have_many(:workspaces).through(:memberships)
     should have_many(:sessions).dependent(:destroy)
+    should have_many(:invitations).inverse_of(:invited_by).dependent(:destroy)
   end
 
   context "validations" do

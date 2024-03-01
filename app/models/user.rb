@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :sessions, dependent: :destroy
   has_many :memberships, dependent: :destroy
+  has_many :invitations, inverse_of: :invited_by, dependent: :destroy
   has_many :workspaces, through: :memberships do
     def mine
       where(memberships: { role: Membership.roles[:owner] })

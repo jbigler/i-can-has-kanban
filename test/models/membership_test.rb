@@ -11,6 +11,9 @@ class MembershipTest < ActiveSupport::TestCase
   context "validations" do
     subject { build(:user_with_workspace).memberships.first }
     should validate_uniqueness_of(:user_id).scoped_to(:workspace_id).ignoring_case_sensitivity
+    should "role is in the list" do
+      validate_inclusion_of(:role).in_array(Membership.roles.keys)
+    end
   end
 
   test "should only destroy owned workspaces when destroyed" do
