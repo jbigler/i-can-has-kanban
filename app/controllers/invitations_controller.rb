@@ -16,7 +16,7 @@ class InvitationsController < ApplicationController
     respond_to do |format|
       if @invitation.save
         send_invitation_email
-        # TODO: Process pending invitation
+        InvitationProcessor.process_invitation(@invitation)
         format.html { redirect_to workspace_url(@workspace), notice: "Invitation was successfully sent." }
         format.json { render :show, status: :created, location: @invitation }
       else

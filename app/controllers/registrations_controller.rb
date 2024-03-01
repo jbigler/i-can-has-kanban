@@ -15,7 +15,7 @@ class RegistrationsController < ApplicationController
       cookies.signed.permanent[:session_token] = { value: session_record.id, httponly: true }
 
       send_email_verification
-      # TODO: process pending invitations
+      InvitationProcessor.process_pending_invitations(@user)
       redirect_to workspaces_url, notice: "Welcome! You have signed up successfully"
     else
       render :new, status: :unprocessable_entity
