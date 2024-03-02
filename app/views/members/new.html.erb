@@ -1,0 +1,27 @@
+<div class="mt-8 flex justify-center">
+  <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <% if @invitation && @invitation.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@invitation.errors.count, "error") %> blocked completion:</h2>
+        <ul>
+          <% @invitation.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= form_with model: @invitation, url: workspace_members_path(@workspace), method: :post, class: "space-y-6" do |f| %>
+      <h5 class="text-xl font-bold text-gray-900 dark:text-white">Invite to Workspace</h5>
+      <p class="text-l font-bold text-gray-900 dark:text-white"><%= @workspace.name %></p>
+      <div class="mb-6">
+        <%= f.label :email, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "john.doe@email.com" %>
+      </div>
+      <div class="mb-6">
+        <%= f.label :role, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.select :role, Invitation.roles.except(:owner).keys.map { | role | [role.humanize, role] }, {}, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+      </div>
+      <%= f.submit "Send invitation", class: "w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+    <% end %>
+  </div>
+</div>

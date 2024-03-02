@@ -1,0 +1,7 @@
+<h1>Workspace members:</h1>
+
+<ul>
+  <% @workspace.members.each do |member| %>
+    <li><%= member.email %></li>
+  <% end %>
+</ul>

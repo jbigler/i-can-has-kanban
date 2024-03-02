@@ -3,17 +3,40 @@
     {
       "warning_type": "Mass Assignment",
       "warning_code": 105,
-      "fingerprint": "aaccd8db0be34afdc88e5af08d91ae2e8b7765dfea2f3fc6e1c37db0adc7b991",
+      "fingerprint": "4220909bae83041c1aacf284c71e09e813cec1e5f47125d038ba18eee93f883e",
       "check_name": "PermitAttributes",
       "message": "Potentially dangerous key allowed for mass assignment",
-      "file": "app/controllers/invitations_controller.rb",
-      "line": 34,
+      "file": "app/controllers/members_controller.rb",
+      "line": 78,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
-      "code": "params.require(:invitation).permit(:email, :role)",
+      "code": "params.require(:membership).permit(:role)",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "InvitationsController",
+        "class": "MembersController",
+        "method": "membership_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "9830a612f6f2d3f330373cd449cc619de20bb72069f1481e537a68b253741465",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/members_controller.rb",
+      "line": 74,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:invitation).permit(:member_id, :email, :role)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "MembersController",
         "method": "invitation_params"
       },
       "user_input": ":role",
@@ -21,9 +44,9 @@
       "cwe_id": [
         915
       ],
-      "note": "The controller action is restricted by a Pundit policy."
+      "note": ""
     }
   ],
-  "updated": "2024-03-01 03:44:10 +0000",
+  "updated": "2024-03-02 10:13:17 +0000",
   "brakeman_version": "6.1.2"
 }
