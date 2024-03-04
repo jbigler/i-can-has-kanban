@@ -1,6 +1,8 @@
 # I Can Has Kanban?
 *Yes, you can!*
 
+![CI/CD](https://github.com/jbigler/i-can-has-kanban/actions/workflows/on_push.yml/badge.svg)
+
 Welcome to the meme Kanban board that I created as a learning project for the latest Rails stack.
 
 The project is deployed on a free fly.io instance at http://has-kanban.fly.dev
