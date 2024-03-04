@@ -1,6 +1,10 @@
 name: Fly Deploy
 on:
   push:
+    paths-ignore:
+      - '.github/**'
+      - 'README.md'
+      - 'LICENSE'
     branches: [ "main" ]
 
 jobs:
