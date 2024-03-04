@@ -26,7 +26,7 @@ class CardPolicy < ApplicationPolicy
   end
 
   def allowed?(permitted_roles)
-    role = @user.memberships.where(workspace_id: record.list.board.workspace.id).first.role
+    role = user.memberships.where(workspace_id: record.list.board.workspace.id).first.role
     permitted_roles.include?(role)
   end
 end

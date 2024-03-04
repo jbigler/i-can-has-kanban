@@ -11,11 +11,14 @@ export default class extends Controller {
   }
 
   connect() {
-    this.sortable = Sortable.create(this.element, {
-      onEnd: this.onEnd.bind(this),
-      group: this.groupValue,
-      draggable: ".draggable"
-    })
+    var role = document.getElementById("lists_frame").dataset.role
+    if (role !== "viewer") {
+      this.sortable = Sortable.create(this.element, {
+        onEnd: this.onEnd.bind(this),
+        group: this.groupValue,
+        draggable: ".draggable"
+      })
+    }
   }
 
   onEnd(event) {

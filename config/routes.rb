@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :workspaces, shallow: true do
     resources :members
     resources :boards do
-      resources :lists, except: [:index] do
+      resources :lists do
         resources :cards, except: [:index]
       end
     end

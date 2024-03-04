@@ -46,7 +46,8 @@ class ListsController < ApplicationController
     respond_to do |format|
       if @list.update(list_params)
         format.turbo_stream do
-          render turbo_stream: turbo_stream.update("label_#{helpers.dom_id(@list)}", @list.title)
+          role = Current.user.memberships.where(workspace_id: @list.board.workspace.id).first.role
+          @list.broadcast_replace_to @list.board, :lists, target: "lists_frame", html: %Q[<turbo-frame id="lists_frame" src="#{board_lists_url(@list.board)}" data-role="#{role}" class="contents">]
         end
         format.html { redirect_to list_url(@list), notice: "List was successfully updated." }
         format.json { render :show, status: :ok, location: @list }
@@ -77,8 +78,7 @@ class ListsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_list
-      @list = List.find(params[:id])
-      authorize @list
+      @list = authorize List.find(params[:id])
     end
 
     def set_board

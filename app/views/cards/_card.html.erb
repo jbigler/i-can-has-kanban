@@ -1,8 +1,7 @@
-<% url = policy(card).update? ? edit_card_path(card) : card_path(card) %>
 <li id="<%= dom_id card %>"
     class="draggable" 
     data-sortable-update-url="<%= card_path(card) %>">
-    <a href="<%= url %>" data-turbo-frame="modal">
+    <a href="<%= edit_card_path(card) %>" data-turbo-frame="modal">
         <div class="block shadow-gray-500 max-w-sm p-3 m-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <p class="line-clamp-3 font-normal text-gray-700 dark:text-gray-400"><%= card.title %></p>
         </div>

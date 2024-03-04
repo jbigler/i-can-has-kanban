@@ -4,6 +4,7 @@
 class CardsController < ApplicationController
   before_action :set_card, only: %i[show edit update destroy]
   before_action :set_list, only: %i[index new create]
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # GET /cards or /cards.json
   def index
@@ -11,12 +12,12 @@ class CardsController < ApplicationController
   end
 
   # GET /cards/1 or /cards/1.json
-  def show; end
+  def show
+  end
 
   # GET /cards/new
   def new
-    @card = @list.cards.new
-    authorize @card
+    @card = authorize @list.cards.new
   end
 
   # GET /cards/1/edit
@@ -24,14 +25,13 @@ class CardsController < ApplicationController
 
   # POST /cards or /cards.json
   def create
-    @card = @list.cards.new(card_params)
-    authorize @card
+    @card = authorize @list.cards.new(card_params)
 
     respond_to do |format|
       if @card.save
         format.turbo_stream do
           elem = "cards_for_#{helpers.dom_id(@list)}"
-          @card.broadcast_append_to @list, :cards, target: elem, partial: "cards/card"
+          @card.broadcast_append_later_to @list, :cards, target: elem, partial: "cards/card"
         end
         format.html { redirect_to card_url(@card), notice: "Card was successfully created." }
         format.json { render :show, status: :created, location: @card }
@@ -52,13 +52,13 @@ class CardsController < ApplicationController
         format.turbo_stream do
           if prev_row_order != @card.row_order
             # Reload the entire list
-            @card.list.broadcast_replace_to @card.list.board, :lists, partial: "lists/list"
+            @card.list.broadcast_replace_later_to @card.list.board, :lists, partial: "lists/list"
             if prev_list_id != @card.list_id
               # Reload previous list as well
-              List.find_by(id: prev_list_id).broadcast_replace_to @card.list.board, :lists, partial: "lists/list"
+              List.find_by(id: prev_list_id).broadcast_replace_later_to @card.list.board, :lists, partial: "lists/list"
             end
           else
-            @card.broadcast_replace_to @card.list, :cards, partial: "cards/card"
+            @card.broadcast_replace_later_to @card.list, :cards, partial: "cards/card"
           end
 
           # TODO refresh affected lists
@@ -90,12 +90,16 @@ class CardsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_card
-      @card = Card.find(params[:id])
-      authorize @card
+      @card = authorize Card.find(params[:id])
     end
 
     def set_list
       @list = List.find(params[:list_id])
+    end
+
+    def user_not_authorized
+      @card = Card.find(params[:id])
+      render :show
     end
 
     # Only allow a list of trusted parameters through.

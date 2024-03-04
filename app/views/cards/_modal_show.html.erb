@@ -26,8 +26,8 @@
         </div>
       </div>
       <div class="flex flex-row gap-2 justify-end">
-        <% if card.persisted? && policy(card).destroy? %>
-          <%= link_to "Delete", card_path(@card), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", action: "turbo-modal#hideModal" }, class: "text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" %>
+        <% if card.persisted? %>
+          <%= link_to "Delete", card_path(@card), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", action: "turbo-modal#hideModal" }, class: "admin:block hidden text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" %>
         <% end %>
         <%= link_to "Close", "#", data: { action: "turbo-modal#hideModal" }, class: "text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
       </div>
