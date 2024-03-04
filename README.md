@@ -9,9 +9,10 @@ The project is deployed on a free fly.io instance at http://has-kanban.fly.dev
 
 After creating an account, you can create workspaces which will be able to be shared with others.
 Within a workspace you can create as many boards as you need.
-Each board has a collection of lists.
-Each list has a collection of cards.
+Each board has a collection of lists, and each list has a collection of cards.
 The boards and lists can be manipulated via drag-and-drop.
+If you invite another User to your workspace, you can both work on the same board together. 
+Turbo frames and streams are used to broadcast the changes.
 
 ## Some notes on the stack used
 - Ruby 3.2.3
@@ -24,7 +25,3 @@ The boards and lists can be manipulated via drag-and-drop.
 - Pundit
 - Minitest
 - FactoryBot
-
-## To-Do
-- Send invitations to members.
-- Member management for workspaces.
