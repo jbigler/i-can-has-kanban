@@ -1,7 +1,58 @@
-<h1>Workspace members:</h1>
+<div class="mx-auto m-4">
+  <h2 class="text-center text-xl font-bold m-4">Workspace Members</h2>
 
-<ul>
-  <% @workspace.members.each do |member| %>
-    <li><%= member.email %></li>
-  <% end %>
-</ul>
+  <div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            Member name
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Member email
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Role
+          </th>
+          <th scope="col" class="px-6 py-3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @memberships.each do |membership| %>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <%= membership.user.name %>
+            </th>
+            <td class="px-6 py-4">
+              <%= membership.user.email %>
+            </td>
+            <td class="px-6 py-4">
+              <%= membership.role.humanize %>
+            </td>
+            <td class="px-6 py-4">
+              <% if !membership.owner? %>
+                <% if policy(membership).update? %>
+                  <%= link_to "Edit", edit_member_path(membership), class: "text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-red-800" %>
+                <% end %>
+                <% if policy(membership).destroy? %>
+                  <%= link_to "Remove", member_path(membership), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", action: "turbo-modal#hideModal" }, class: "text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="mx-auto">
+<% if policy(@workspace.invitations.build).new? %>
+  <a href="<%= new_workspace_member_path(@workspace) %>" type="button" class="place-self-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ">
+    <svg class="w-3.5 h-3.5 me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM12 8.25C12.4142 8.25 12.75 8.58579 12.75 9V11.25H15C15.4142 11.25 15.75 11.5858 15.75 12C15.75 12.4142 15.4142 12.75 15 12.75H12.75L12.75 15C12.75 15.4142 12.4142 15.75 12 15.75C11.5858 15.75 11.25 15.4142 11.25 15V12.75H9C8.58579 12.75 8.25 12.4142 8.25 12C8.25 11.5858 8.58579 11.25 9 11.25H11.25L11.25 9C11.25 8.58579 11.5858 8.25 12 8.25Z" fill="currentColor"></path> </g></svg>
+    Invite new member
+  </a>
+<% end %>
+<a href="<%= workspace_path(@workspace) %>" type="button" class="place-self-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ">
+  Back to workspace
+</a>
+</div>

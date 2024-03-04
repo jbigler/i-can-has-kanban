@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MembersController < ApplicationController
-  before_action :set_workspace
+  before_action :set_workspace, only: %i[index new create]
   before_action :set_membership, only: %i[show edit update destroy]
 
   def index
@@ -14,13 +14,13 @@ class MembersController < ApplicationController
 
   def new
     @invitation = @workspace.invitations.new(invited_by: Current.user)
-    authorize @invitation, policy_class: MembershipPolicy
+    authorize @invitation
   end
 
   def create
     @invitation = @workspace.invitations.new(invitation_params)
     @invitation.invited_by = Current.user
-    authorize @invitation, policy_class: MembershipPolicy
+    authorize @invitation
 
     respond_to do |format|
       if @invitation.save
@@ -39,7 +39,7 @@ class MembersController < ApplicationController
   def update
     respond_to do |format|
       if @membership.update(membership_params)
-        format.html { redirect_to workspace_member_url(@workspace, @membership), notice: "Member was successfully updated." }
+        format.html { redirect_to workspace_members_url(@membership.workspace), notice: "Member was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -51,14 +51,14 @@ class MembersController < ApplicationController
     @membership.destroy!
 
     respond_to do |format|
-      format.html { redirect_to workspace_url(workspace), notice: "Member was successfully removed." }
+      format.html { redirect_to workspace_members_url(workspace), notice: "Member was successfully removed." }
     end
   end
 
   private
     def set_membership
-      @membership = @workspace.memberships.find(params[:id])
-      authorize @membership, policy_class: MembershipPolicy
+      @membership = Membership.find(params[:id])
+      authorize @membership
     end
 
     def set_workspace

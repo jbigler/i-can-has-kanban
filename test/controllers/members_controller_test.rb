@@ -16,7 +16,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   test "should get show" do
     membership = Membership.create(user: @member, workspace: @workspace, role: Membership.roles[:editor])
-    get workspace_member_url @workspace, membership
+    get member_url membership
     assert_response :success
   end
 
@@ -35,26 +35,26 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   test "should get edit" do
     membership = Membership.create(user: @member, workspace: @workspace, role: Membership.roles[:editor])
-    get edit_workspace_member_url @workspace, membership
+    get edit_member_url membership
     assert_response :success
   end
 
   test "should update membership" do
     membership = Membership.create(user: @member, workspace: @workspace, role: Membership.roles[:editor])
-    patch workspace_member_url(@workspace, membership),
+    patch member_url(membership),
           params: { membership: { role: "viewer" } }
 
     membership.reload
     assert_equal "viewer", membership.role
-    assert_redirected_to workspace_member_url(@workspace, membership)
+    assert_redirected_to workspace_members_url(@workspace)
   end
 
   test "should destroy membership" do
     membership = Membership.create(user: @member, workspace: @workspace, role: Membership.roles[:editor])
     assert_difference("Membership.count", -1) do
-      delete workspace_member_url(@workspace, membership)
+      delete member_url(membership)
     end
 
-    assert_redirected_to workspace_url(@workspace)
+    assert_redirected_to workspace_members_url(@workspace)
   end
 end

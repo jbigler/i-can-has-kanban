@@ -1,3 +1,21 @@
-<h1>Member Profile</h1>
-<p>Member Email: <%= @membership.user.email %></p>
-<p>Member Role: <%= @membership.role.humanize %></p>
+<div class="mt-12 flex flex-col mx-auto">
+  <h2 class="py-6 text-4xl font-bold dark:text-white">Member Profile</h2>
+
+      <div id="<%= dom_id @membership %>" class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <p class="my-2">
+        <strong>Member name:</strong>
+        <%= @membership.user.name %>
+        </p>
+
+        <p class="my-2">
+        <strong>Member email:</strong>
+        <%= @membership.user.email %>
+        </p>
+
+        <p class="my-2">
+        <strong>Member role:</strong>
+        <%= @membership.role.humanize %>
+        </p>
+        <%= link_to "Edit membership", edit_member_path(@membership), class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+      </div>
+</div>

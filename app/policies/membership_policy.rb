@@ -9,23 +9,20 @@ class MembershipPolicy < ApplicationPolicy
     true
   end
 
-  def create?
-    permitted_roles = Membership.roles.except(:editor, :viewer)
-    allowed? permitted_roles
-  end
-
   def update?
     permitted_roles = Membership.roles.except(:editor, :viewer)
-    allowed? permitted_roles
+    allowed? permitted_roles unless record.user == @user
   end
 
   def destroy?
     permitted_roles = Membership.roles.except(:editor, :viewer)
-    allowed? permitted_roles
+    allowed? permitted_roles unless record.user == @user
   end
 
   def allowed?(permitted_roles)
-    role = @user.memberships.find_by(workspace_id: record.workspace.id).role
-    permitted_roles.include?(role)
+    if !record.owner?
+      role = @user.memberships.find_by(workspace_id: record.workspace.id).role
+      permitted_roles.include?(role)
+    end
   end
 end
