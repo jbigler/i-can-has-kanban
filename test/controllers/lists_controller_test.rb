@@ -22,7 +22,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
            params: { list: { board_id: @list.board_id, title: @list.title } }
     end
 
-    assert_redirected_to list_url(List.last)
+    assert_redirected_to board_url(@board)
   end
 
   test "should show list" do
@@ -41,7 +41,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
     patch list_url(@list),
           params: { list: { board_id: @list.board_id, title: @list.title } }
 
-    assert_redirected_to list_url(@list)
+    assert_redirected_to board_url(@board)
   end
 
   test "should destroy list" do
@@ -49,6 +49,6 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
       delete list_url(@list)
     end
 
-    assert_redirected_to board_lists_url(@board)
+    assert_redirected_to board_url(@board)
   end
 end

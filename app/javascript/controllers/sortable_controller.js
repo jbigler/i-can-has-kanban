@@ -3,7 +3,6 @@ import { patch } from "@rails/request.js"
 
 import Sortable from "sortablejs"
 
-// Connects to data-controller="sortable"
 export default class extends Controller {
   static values = {
     type: String,
@@ -28,7 +27,7 @@ export default class extends Controller {
     var itemType = event.to.dataset.sortableTypeValue
 
     patch(sortableUpdateUrl, {
-      body: JSON.stringify({ [itemType]: { row_order_position: newIndex, list_id: sortableListId } }), responseKind: "turbo-stream"
+      body: JSON.stringify({ [itemType]: { row_order_position: newIndex, list_id: sortableListId } })
     })
   }
 }

@@ -24,7 +24,7 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
                              title: @card.title } }
     end
 
-    assert_redirected_to card_url(Card.last)
+    assert_redirected_to board_url(@board)
   end
 
   test "should show card" do
@@ -44,7 +44,7 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
           params: { card: { description: @card.description, row_order: @card.row_order,
                             title: @card.title } }
 
-    assert_redirected_to card_url(@card)
+    assert_redirected_to board_url(@board)
   end
 
   test "should destroy card" do
@@ -52,6 +52,6 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
       delete card_url(@card)
     end
 
-    assert_redirected_to list_cards_url(@list)
+    assert_redirected_to board_url(@board)
   end
 end

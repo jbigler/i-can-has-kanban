@@ -4,7 +4,7 @@
 class List < ApplicationRecord
   include RankedModel
 
-  belongs_to :board
+  belongs_to :board, touch: true
   has_many :cards, dependent: :destroy
 
   ranks :row_order, with_same: :board_id

@@ -4,4 +4,6 @@
 class Board < ApplicationRecord
   belongs_to :workspace
   has_many :lists, dependent: :destroy
+
+  broadcasts_refreshes
 end

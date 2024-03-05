@@ -26,65 +26,21 @@ class CardsController < ApplicationController
   # POST /cards or /cards.json
   def create
     @card = authorize @list.cards.new(card_params)
-
-    respond_to do |format|
-      if @card.save
-        format.turbo_stream do
-          elem = "cards_for_#{helpers.dom_id(@list)}"
-          @card.broadcast_append_later_to @list, :cards, target: elem, partial: "cards/card"
-        end
-        format.html { redirect_to card_url(@card), notice: "Card was successfully created." }
-        format.json { render :show, status: :created, location: @card }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @card.errors, status: :unprocessable_entity }
-      end
-    end
+    @card.save
+    redirect_to board_path @card.list.board
   end
 
   # PATCH/PUT /cards/1 or /cards/1.json
   def update
-    prev_row_order = @card.row_order
-    prev_list_id = @card.list_id
-
-    respond_to do |format|
-      if @card.update(card_params)
-        format.turbo_stream do
-          if prev_row_order != @card.row_order
-            # Reload the entire list
-            @card.list.broadcast_replace_later_to @card.list.board, :lists, partial: "lists/list"
-            if prev_list_id != @card.list_id
-              # Reload previous list as well
-              List.find_by(id: prev_list_id).broadcast_replace_later_to @card.list.board, :lists, partial: "lists/list"
-            end
-          else
-            @card.broadcast_replace_later_to @card.list, :cards, partial: "cards/card"
-          end
-
-          # TODO refresh affected lists
-        end
-        format.html { redirect_to card_url(@card), notice: "Card was successfully updated." }
-        format.json { render :show, status: :ok, location: @card }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @card.errors, status: :unprocessable_entity }
-      end
-    end
+    @card.update(card_params)
+    redirect_back_or_to @card.list.board, status: :see_other
   end
-  # rubocop:enable Metrics/AbcSize
 
   # DELETE /cards/1 or /cards/1.json
   def destroy
     list = @card.list
     @card.destroy!
-
-    respond_to do |format|
-      format.turbo_stream do
-        @card.broadcast_remove_to list, :cards
-      end
-      format.html { redirect_to list_cards_url(list), notice: "Card was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to board_path(list.board)
   end
 
   private

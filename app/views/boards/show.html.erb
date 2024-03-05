@@ -1,4 +1,5 @@
-<div class="h-full max-h-full flex flex-col overflow-hidden" <%= 'data-admin' if policy(@board).update? %>>
+<%= turbo_stream_from @board %>
+<div id="<%= dom_id(@board) %>" class="h-full max-h-full flex flex-col overflow-hidden" <%= 'data-admin' if policy(@board).update? %>>
   <div class="self-center flex flex-row w-full gap-10 pb-2">
 
     <button id="board-dropdown" 
@@ -25,7 +26,19 @@
     <%= link_to "Back to workspace", workspace_path(@board.workspace), class: "rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
   </div>
   <% role = Current.user.memberships.where(workspace_id: @board.workspace.id).first.role %>
-  <%= turbo_stream_from @board, :lists %>
-  <%= turbo_frame_tag "lists_frame", src: board_lists_path(@board), data: { role: role }, class: "contents" %>
-  <%= turbo_frame_tag "modal" %>
+  <%= tag.div id: "lists_frame", class: "contents", data: { role: role } do %>
+    <div id="lists"
+         data-controller="sortable"
+         data-sortable-type-value="list"
+         class="flex-grow max-h-full flex flex-row bg-gray-400 overflow-x-scroll">
+
+      <% @board.lists.rank(:row_order).each do |list| %>
+        <%= render list %>
+      <% end %>
+      <div id="new-list" class="admin:flex flex-col hidden min-w-72 max-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        <%= link_to "+ Add New List", new_board_list_path(@board), data: { turbo_frame: "modal" }, class: "font-bold dark:text-white text-center" %>
+      </div>
+    </div>
+  <% end %>
+  <%= turbo_frame_tag "modal", target: "_top", data: { turbo_permanent: true } %>
 </div>

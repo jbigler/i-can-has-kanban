@@ -24,56 +24,23 @@ class ListsController < ApplicationController
 
   # POST /lists or /lists.json
   def create
-    @list = @board.lists.new(list_params)
-    authorize @list
-
-    respond_to do |format|
-      if @list.save
-        format.turbo_stream do
-          @list.broadcast_before_to @list.board, :lists, target: "new-list", partial: "lists/list"
-        end
-        format.html { redirect_to list_url(@list), notice: "List was successfully created." }
-        format.json { render :show, status: :created, location: @list }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
-      end
-    end
+    @list = authorize @board.lists.new(list_params)
+    @list.save
+    redirect_to @board
   end
 
   # PATCH/PUT /lists/1 or /lists/1.json
   def update
-    respond_to do |format|
-      if @list.update(list_params)
-        format.turbo_stream do
-          role = Current.user.memberships.where(workspace_id: @list.board.workspace.id).first.role
-          @list.broadcast_replace_to @list.board, :lists, target: "lists_frame", html: %Q[<turbo-frame id="lists_frame" src="#{board_lists_url(@list.board)}" data-role="#{role}" class="contents">]
-        end
-        format.html { redirect_to list_url(@list), notice: "List was successfully updated." }
-        format.json { render :show, status: :ok, location: @list }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
-      end
-    end
+    @list.update(list_params)
+    redirect_back_or_to @list.board, status: :see_other
   end
-  # rubocop:enable Metrics/AbcSize
 
   # DELETE /lists/1 or /lists/1.json
   def destroy
     board = @list.board
     @list.destroy!
-
-    respond_to do |format|
-      format.turbo_stream do
-        @list.broadcast_remove_to board, :lists
-      end
-      format.html { redirect_to board_lists_url(board), notice: "List was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to board_path(board)
   end
-
-  def update_position; end
 
   private
     # Use callbacks to share common setup or constraints between actions.
