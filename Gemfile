@@ -84,7 +84,7 @@ group :development do
   gem "guard-brakeman"
   gem "guard-minitest"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
+  gem "rack-mini-profiler"
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   gem "spring"
