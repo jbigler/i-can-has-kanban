@@ -6,15 +6,17 @@
      <p class="admin:hidden block font-bold dark:text-white text-center"><%= list.title %></p> 
 
      <ul id="cards_for_<%= dom_id(list) %>"
-             data-controller="sortable"
-             data-sortable-list-id="<%= list.id %>"
-             data-sortable-group-value="cards"
-             data-sortable-type-value="card"
-             class="list full flex-grow overflow-y-scroll">
+         data-controller="sortable"
+         data-sortable-list-id="<%= list.id %>"
+         data-sortable-group-value="cards"
+         data-sortable-type-value="card"
+         class="list full flex-grow overflow-y-scroll">
 
-             <% list.cards.rank(:row_order).each do |card| %>
-                 <%= render card %>
-             <% end %>
+         <% list.cards.rank(:row_order).each do |card| %>
+           <% cache card do %>
+             <%= render card %>
+           <% end %>
+         <% end %>
      </ul>
      <%= link_to "Add Card", new_list_card_path(list), data: { turbo_frame: "modal" }, class: "admin:block hidden font-bold dark:text-white text-center" %>
 </div>

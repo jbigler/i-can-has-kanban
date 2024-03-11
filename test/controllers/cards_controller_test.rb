@@ -21,14 +21,14 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Card.count") do
       post list_cards_url(@list),
            params: { card: { description: @card.description, row_order: @card.row_order,
-                             title: @card.title } }
+                             title: @card.title, color: "000000" } }
     end
 
     assert_redirected_to board_url(@board)
   end
 
   test "should show card" do
-    get card_url(@card)
+    get card_url @card
 
     assert_response :success
   end
@@ -42,7 +42,7 @@ class CardsControllerTest < ActionDispatch::IntegrationTest
   test "should update card" do
     patch card_url(@card),
           params: { card: { description: @card.description, row_order: @card.row_order,
-                            title: @card.title } }
+                            title: @card.title, color: "h03040" } }
 
     assert_redirected_to board_url(@board)
   end

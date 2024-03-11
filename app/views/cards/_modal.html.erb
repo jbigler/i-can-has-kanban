@@ -24,6 +24,10 @@
           <%= form.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
           <%= form.text_area :description, rows: 4, class: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Description" %>
         </div>
+        <div class="col-span-2">
+          <%= form.label :color, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+          <%= form.select :color, %w(none gray red green blue orange violet).each { |color| %(<option><span class="w-8 h-8 rounded-full bg-blue-500"></span>#{color}</option>)} %>
+        </div>
       </div>
       <div class="flex flex-row gap-2 justify-end">
         <% if card.persisted? %>
