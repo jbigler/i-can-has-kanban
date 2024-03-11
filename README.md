@@ -11,7 +11,7 @@ After creating an account, you can create workspaces which will be able to be sh
 Within a workspace you can create as many boards as you need.
 Each board has a collection of lists, and each list has a collection of cards.
 The boards and lists can be manipulated via drag-and-drop.
-If you invite another User to your workspace, you can both work on the same board together. 
+If you invite another User to your workspace, you can both work on the same board together.
 Turbo frames and streams are used to broadcast the changes.
 
 ## Some notes on the stack used
