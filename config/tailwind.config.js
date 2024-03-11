@@ -14,7 +14,18 @@ module.exports = {
       },
     },
   },
-  safelist: ['border-gray-700', 'border-red-700', 'border-green-700', 'border-blue-700', 'border-orange-700', 'border-violet-700'],
+  safelist: [
+    {
+      pattern: /border-[^/]+$/,
+      variants: [
+        'dark',
+        'hover',
+        'focus',
+        'dark:hover',
+        'dark:focus',
+        ,],
+    },
+  ],
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
