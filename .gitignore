@@ -39,6 +39,7 @@
 
 tags
 audit.json
+.mise.toml
 
 # Ignore default Litestack SQLite databases.
 /db/**/*.sqlite3
@@ -47,3 +48,4 @@ audit.json
 /coverage
 
 /.dev/
+
