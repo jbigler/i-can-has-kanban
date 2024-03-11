@@ -13,7 +13,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium, using: :chrome,
                        screen_size: [1400, 1400], options: {
                          browser: :remote,
-                         url: "http://selenium:4444"
+                         url: "http://selenium:4444",
+                         timeout: 120
                        }
 
   def sign_in_as(user)
