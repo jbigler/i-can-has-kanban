@@ -2,7 +2,7 @@
 
 # Boards Controller
 class BoardsController < ApplicationController
-  before_action :set_board, only: %i[show edit update destroy]
+  before_action :set_board, only: %i[edit update destroy]
   before_action :set_workspace, only: %i[index new create]
 
   # GET /boards or /boards.json
@@ -11,7 +11,10 @@ class BoardsController < ApplicationController
   end
 
   # GET /boards/1 or /boards/1.json
-  def show; end
+  def show
+    @board = Board.where(id: params[:id]).preload(sorted_lists: :sorted_cards).first
+    authorize @board
+  end
 
   # GET /boards/new
   def new

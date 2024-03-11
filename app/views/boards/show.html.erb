@@ -32,7 +32,7 @@
          data-sortable-type-value="list"
          class="flex-grow max-h-full flex flex-row bg-gray-400 overflow-x-scroll">
 
-      <% @board.lists.rank(:row_order).each do |list| %>
+      <% @board.sorted_lists.each do |list| %>
         <%= render list %>
       <% end %>
       <div id="new-list" class="admin:flex flex-col hidden min-w-72 max-w-72 p-3 m-2 bg-gray-200 border border-gray-400 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">

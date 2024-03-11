@@ -7,6 +7,8 @@ class Card < ApplicationRecord
   belongs_to :list, touch: true
   ranks :row_order, with_same: :list_id
 
+  scope :sorted, -> { order(row_order: :asc) }
+
   normalizes :color, with: -> { _1.downcase.gsub(/[[:space:]]/, "") }
 
   def color_with_default

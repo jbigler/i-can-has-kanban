@@ -12,7 +12,7 @@
          data-sortable-type-value="card"
          class="list full flex-grow overflow-y-scroll">
 
-         <% list.cards.rank(:row_order).each do |card| %>
+         <% list.sorted_cards.each do |card| %>
            <% cache card do %>
              <%= render card %>
            <% end %>
