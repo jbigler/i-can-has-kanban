@@ -18,6 +18,7 @@ module Identity
     private
       def set_user
         @user = Current.user
+        redirect_to root_path, notice: "You can't change the demo email address" if @user.email == "user@demo.test"
       end
 
       def user_params

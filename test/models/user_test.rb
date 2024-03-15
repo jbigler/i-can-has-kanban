@@ -31,4 +31,22 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal(1, user1.workspaces.others.count)
   end
+
+  test "deleting a user should purge all owned workspaces" do
+    user1 = create(:user_with_3_workspaces)
+    board = user1.workspaces.mine.first.boards.create(name: "Test board")
+    board.lists.create(title: "Test List")
+    board.lists.first.cards.create(title: "Test Card")
+    assert_equal(3, user1.workspaces.mine.count)
+
+    assert_difference("Workspace.count", -3) do
+      assert_difference("Board.count", -1) do
+        assert_difference("List.count", -1) do
+            assert_difference("Card.count", -1) do
+              user1.destroy
+            end
+          end
+      end
+    end
+  end
 end

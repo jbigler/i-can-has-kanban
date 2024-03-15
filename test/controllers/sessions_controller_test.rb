@@ -31,6 +31,14 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should sign in user@demo.test with any password" do
+    post sign_in_url, params: { email: "user@demo.test", password: "12345abcdefg" }
+
+    assert assert_redirected_to workspaces_url
+    get workspaces_url
+    assert_response :success
+  end
+
   test "should not sign in with wrong credentials" do
     post sign_in_url, params: { email: @user.email, password: "SecretWrong1*3" }
 

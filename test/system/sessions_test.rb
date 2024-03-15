@@ -25,6 +25,13 @@ class SessionsTest < ApplicationSystemTestCase
     assert_text "Signed in successfully"
   end
 
+  test "sign in as demo user" do
+    visit root_url
+    click_on "Demo"
+
+    assert_text "Signed in successfully"
+  end
+
   test "signing out" do
     sign_in_as @user
     find_by_id("user-menu-button").click

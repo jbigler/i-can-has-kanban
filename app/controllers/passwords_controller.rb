@@ -16,6 +16,7 @@ class PasswordsController < ApplicationController
   private
     def set_user
       @user = Current.user
+      redirect_to root_path, notice: "You can't change the demo password" if @user.email == "user@demo.test"
     end
 
     def user_params
