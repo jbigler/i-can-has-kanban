@@ -4,7 +4,8 @@ class DemoPrep
   def self.initialize_demo(email)
     user = User.find_by(email: email)
     if !user
-      user = FactoryBot.create(:user_with_workspace, email: email)
+      user = User.create(name: "Demo User", email: email, password: "password123456", password_confirmation: "password123456")
+      user.workspaces.create(name: "Workspace 1")
       populate_workspace(user.workspaces.first)
     elsif user.created_at.to_date != Date.today
       user.workspaces.each do |workspace|
