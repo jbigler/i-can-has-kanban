@@ -38,7 +38,6 @@ class WorkspacesController < ApplicationController
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   # PATCH/PUT /workspaces/1 or /workspaces/1.json
   def update
